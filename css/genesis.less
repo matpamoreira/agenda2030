@@ -1,0 +1,239 @@
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Amaranth');
+
+@cor_fundo: #EDEEF0;
+@cor_conteudo: #F4F6F6;
+@cor_detalhe:#08337F;
+@cor_fonte: #aac5ab; /*#a9c4ab*/ /*verde logo*/
+@cor_titulo: #363931;
+@cor_texto: #6f6f6e; /*cinza claro*/
+@cor_link: #797eb4; /*azul*/
+
+@cor_ods1: #ED3A4B;
+@cor_ods2: #E5B54F;
+@cor_ods3: #50AB4D;
+@cor_ods4: #D72E3A;
+@cor_ods5: #EF5536;
+@cor_ods6: #2BC1E2;
+@cor_ods7: #FFCF26;
+@cor_ods8: #B62B53;
+@cor_ods9: #F37F3D;
+@cor_ods10: #EB2779;
+@cor_ods11: #FAAC3C;
+@cor_ods12: #CD9C40;
+@cor_ods13: #458F5A;
+@cor_ods14: #06A6DE;
+@cor_ods15: #66BC48;
+@cor_ods16: #077BAC;
+@cor_ods17: #1D5A7C;
+
+html, body, h1, h2, h4, ul, li, a, p, img, input, footer{
+  margin:0;
+  padding:0;
+  list-style-type:none;
+  text-decoration:none;
+}
+
+html{
+  /*font-family: 'Roboto', sans-serif;*/
+  font-family: 'Amaranth', sans-serif;
+  background-color:@cor_fundo;
+  color:black;
+}
+body{
+  background-color:@cor_conteudo;
+}
+header h1{
+  margin:10px 20px;
+  text-align:center;
+}
+header{
+  border:1px solid @cor_detalhe;
+  background-color:white;
+}
+#menu_topo{
+  padding:0 20px;
+  background-color:@cor_fundo;
+}
+#menu_topo li{
+  display:inline-block;
+  padding:5px 0;
+  margin-right:20px;
+}
+#menu_topo li:last-child{
+  margin-right:0;
+}
+#menu_topo a{
+  color:white;
+  font-size:20px;
+}
+#conteudo{
+  padding:20px;
+  min-height:400px;
+}
+#conteudo #breadcrumb{
+  font-size:12px;
+}
+h2{
+  margin-bottom:20px;
+  font-size:32px;
+}
+.subtitulo{
+  font-style:italic;
+  font-size:16px;
+  margin:-22px 0 20px;
+  display:block;
+}
+.carregando{
+  max-width:100% !important;
+  display:block !important;
+  height:40px;
+  width:auto;
+  font-size:16px;
+  background-image:url("../img/load.gif") !important;
+  background-repeat:no-repeat !important;
+  background-position:center center !important;
+  position:relative;
+  margin-bottom:20px;
+}
+
+.caixa{
+  padding:10px 10px 0;
+  border:1px solid @cor_detalhe;
+  margin-top:37px;
+  background-color:white;
+  position:relative;
+}
+.caixa .rotulo{
+  background-color:@cor_detalhe;
+  color:white;
+  font-weight:bold;
+  font-size:14px;
+  padding:5px 10px;
+  display:block;
+  position:absolute;
+  top:-27px;
+  left:0;
+  z-index:2;
+}
+.cartoes{
+  overflow:auto;
+  position:relative;
+}
+.cartoes:empty .caixa{
+  display:none;
+}
+.cartao{
+  border:1px solid silver;
+  margin:0 10px 10px 0;
+  box-shadow:1px 1px 3px #888;
+  -webkit-box-shadow:1px 1px 3px #888;
+  -moz-box-shadow:1px 1px 3px #888;
+  background-color:@cor_conteudo;
+  height:180px;
+  width:180px;
+  float:left;
+  padding:10px;
+  position:relative;
+}
+.cartao a{
+  display:block;
+}
+.cartao:last-child{
+  margin-right:0;
+}
+.cartao:hover .btt_opcoes{
+  display:block;
+}
+.cartao .opcoes{
+  border:1px solid silver;
+  position:absolute;
+  bottom:0;
+  left:-100px;
+  width:100px;
+  display:none;
+  text-align:center;
+}
+.cartao .opcoes i{
+  vertical-align:middle;
+  margin-right:4px;
+}
+.btt_opcoes:hover{
+  display:block;
+}
+.cartao .btt_opcoes{
+  position:absolute;
+  top:0;
+  right:0;
+  display:none;
+  content:'f142';
+}
+.cartao .titulo{
+  margin:0 auto 5px;
+  font-size:24px;
+  text-align:center;
+  display:block;
+}
+.cartao .dsc{
+  text-align:center;
+  display:block;
+}
+.cartao .ref{
+  font-size:14px;
+  position:absolute;
+  display:block;
+  bottom:0;
+  text-align:right;
+  right:0;
+  background-color:@cor_fundo;
+  color:white;
+  width:100%;
+  padding:2px 0;
+}
+.cartao .ref i{
+  vertical-align:middle;
+  margin:0 8px 0 5px;
+  font-size:13px;
+}
+.definicao{
+  height:100px;
+  min-width:150px;
+  width:auto;
+  text-align:center;
+}
+.coluna{
+  border:1px solid silver;
+  margin-bottom:2px;
+  background-color:@cor_conteudo;
+  display:inline-block;
+  padding:5px 10px;
+  position:relative;
+}
+.linha{
+  border:1px solid silver;
+  margin-bottom:2px;
+  background-color:@cor_conteudo;
+  display:block;
+  padding:5px 10px;
+  position:relative;
+}
+.coluna:last-child, .linha:last-child{
+  margin-bottom:10px;
+}
+
+footer{
+  background-color:@cor_fundo;
+  color:white;
+}
+.copyright{
+  padding:10px 0;
+  text-align:center;
+  font-size:10px;
+}
+.copyright a{
+  color:inherit;
+}
+#preload3{
+  background:url('../img/load.gif') no-repeat -9999px -9999px;
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="5d1dfe8b-9b9f-467e-b8f7-28fcddd5d911" name="Fiscalize" url="http://52.24.9.238/agenda2030">
+        <fileTransfer host="52.24.9.238" port="21" rootFolder="/agenda2030" password="dfccdf9bdf9adfdbdfdddfe0dfffdfe6dfdadfc5" username="fa">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
