@@ -72,18 +72,20 @@ function getInicio(){
             <div class="cx c2"></div>
             <div class="cx c3"></div>
             <div class="cx c4"></div>
-            <div class="cx c1"></div>
-            <div class="cx c2"></div>
-            <div class="cx c3"></div>
-            <div class="cx c4"></div>
-            <div class="cx c1"></div>
-            <div class="cx c2"></div>
-            <div class="cx c3"></div>
-            <div class="cx c4"></div>
-            <div class="cx c1"></div>
-            <div class="cx c2"></div>
-            <div class="cx c3"></div>
-            <div class="cx c4"></div>
+            <div class="cx c5"></div>
+            <div class="cx c6"></div>
+            <div class="cx c7"></div>
+            <div class="cx c8"></div>
+            <div class="cx c9"></div>
+            <div class="cx c10"></div>
+            <div class="cx c11"></div>
+            <div class="cx c12"></div>
+            <div class="cx c13"></div>
+            <div class="cx c14"></div>
+            <div class="cx c15"></div>
+            <div class="cx c16"></div>
+            <div class="cx c17"></div>
+            <div class="cx c18"></div>
         </div>
         <header>
         </header>
