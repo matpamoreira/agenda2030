@@ -56,8 +56,6 @@ function getInicio(){
         <script type="text/javascript" src="js/less.min.js"></script>
         <link rel="stylesheet" type="text/css" href="css/screen.css"/>
         <link rel="stylesheet" type="text/css" href="css/menu.css"/>
-        <link rel="stylesheet" type="text/css" href="css/selectize.css"/>
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css"/>
         <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="js/jquery.number.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
