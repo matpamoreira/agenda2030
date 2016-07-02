@@ -52,14 +52,16 @@ function getInicio(){
         <meta property="og:title" content="<? echo $NOM_SISTEMA; ?>" />
         <meta property="og:description" content="<? echo $DESC_SISTEMA; ?>" />
 
+        <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.min.css" />
         <link rel="stylesheet/less" type="text/css" href="css/genesis.less">
         <script type="text/javascript" src="js/less.min.js"></script>
         <link rel="stylesheet" type="text/css" href="css/screen.css"/>
         <link rel="stylesheet" type="text/css" href="css/menu.css"/>
+
+        <script type="text/javascript" src="js/jquery.fullPage.min.js"></script>
         <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="js/jquery.number.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
         <script type="text/javascript" src="js/xsl.js"></script>
         <script type="text/javascript" src="js/util.js"></script>
         <script type="text/javascript" src="js/brain.js.php"></script>
@@ -83,12 +85,33 @@ function getInicio(){
             <div class="cx c15"></div>
             <div class="cx c16"></div>
             <div class="cx c17"></div>
-            <div class="cx c18"></div>
         </div>
         <header>
         </header>
-        <div id="conteudo">
         <div id="dialog"></div>
+        <div id="conteudo">
+            <div id="fullpage">
+                <div class="section">Some section</div>
+                <div class="section">
+                    <div class="slide"> Slide 1 </div>
+                    <div class="slide"> Slide 2 </div>
+                    <div class="slide"> Slide 3 </div>
+                    <div class="slide"> Slide 4 </div>
+                </div>
+                <div class="section">Some section</div>
+                <div class="section">Some section</div>
+            </div>
+        </div>
+        <div id="preload1"></div>
+        <div id="preload2"></div>
+        <div id="preload3"></div>
+    </body>
+    </html>
+    <script>
+        $(document).ready(function() {
+            $('#fullpage').fullpage();
+        });
+    </script>
     <?
 }
 
