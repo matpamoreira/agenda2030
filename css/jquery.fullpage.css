@@ -50,9 +50,8 @@ html.fp-enabled,
     table-layout:fixed;
     width: 100%;
 }
-.fp-tableCell {
+.fp-tableCell{
     display: table-cell;
-    vertical-align: middle;
     width: 100%;
     height: 100%;
 }
@@ -78,13 +77,13 @@ html.fp-enabled,
     transform: translate3d(0,0,0);
 }
 .fp-controlArrow.fp-prev {
-    left: 15px;
-    width: 0;
+    left:15px;
+    width:0;
     border-width: 38.5px 34px 38.5px 0;
     border-color: transparent #fff transparent transparent;
 }
 .fp-controlArrow.fp-next {
-    right: 15px;
+    right:15px;
     border-width: 38.5px 0 38.5px 34px;
     border-color: transparent transparent transparent #fff;
 }

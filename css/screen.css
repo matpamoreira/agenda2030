@@ -1,0 +1,25 @@
+@media screen and (max-width:640px){
+    .opcao a{
+        font-size:1.2em;
+    }
+}
+@media screen and (max-width:480px){
+    .opcao a{
+        font-size:1em;
+    }
+}
+@media screen and (max-width:320px){
+    .opcao{
+        float:none;
+        width:100%;
+        border-right:0;
+        border-bottom:1px solid #BFBFBF;
+    }
+    .opcao a{
+        padding:8px 0;
+    }
+    .opcao a:after {
+        display:inline;
+        margin:0 0 0 5px;
+    }
+}

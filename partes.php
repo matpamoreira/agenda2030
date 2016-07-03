@@ -52,66 +52,110 @@ function getInicio(){
         <meta property="og:title" content="<? echo $NOM_SISTEMA; ?>" />
         <meta property="og:description" content="<? echo $DESC_SISTEMA; ?>" />
 
-        <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.fullpage.css" />
         <link rel="stylesheet/less" type="text/css" href="css/genesis.less">
         <script type="text/javascript" src="js/less.min.js"></script>
         <link rel="stylesheet" type="text/css" href="css/screen.css"/>
         <link rel="stylesheet" type="text/css" href="css/menu.css"/>
 
-        <script type="text/javascript" src="js/jquery.fullPage.min.js"></script>
         <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="js/jquery.number.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/jquery.fullpage.min.js"></script>
         <script type="text/javascript" src="js/xsl.js"></script>
         <script type="text/javascript" src="js/util.js"></script>
         <script type="text/javascript" src="js/brain.js.php"></script>
     </head>
     <body>
-        <div class="gesso">
-            <div class="cx c1"></div>
-            <div class="cx c2"></div>
-            <div class="cx c3"></div>
-            <div class="cx c4"></div>
-            <div class="cx c5"></div>
-            <div class="cx c6"></div>
-            <div class="cx c7"></div>
-            <div class="cx c8"></div>
-            <div class="cx c9"></div>
-            <div class="cx c10"></div>
-            <div class="cx c11"></div>
-            <div class="cx c12"></div>
-            <div class="cx c13"></div>
-            <div class="cx c14"></div>
-            <div class="cx c15"></div>
-            <div class="cx c16"></div>
-            <div class="cx c17"></div>
-        </div>
-        <header>
-        </header>
-        <div id="dialog"></div>
-        <div id="conteudo">
-            <div id="fullpage">
-                <div class="section">Some section</div>
-                <div class="section">
-                    <div class="slide"> Slide 1 </div>
-                    <div class="slide"> Slide 2 </div>
-                    <div class="slide"> Slide 3 </div>
-                    <div class="slide"> Slide 4 </div>
+        <div id="fullpage">
+            <div class="section">
+                <!--
+                https://css-tricks.com/snippets/css/css-triangle/
+                http://tympanus.net/Development/ArrowNavigationStyles/
+http://html-tuts.com/css-arrows-up-down-left-right-triangle/
+                http://tympanus.net/Development/HoverEffectIdeas/index.html
+                http://www.cssauthor.com/jquery-css3-hover-effects/
+                <div class="gesso">
+                    <div class="cx c1"></div>
+                    <div class="cx c2"></div>
+                    <div class="cx c3"></div>
+                    <div class="cx c4"></div>
+                    <div class="cx c5"></div>
+                    <div class="cx c6"></div>
+                    <div class="cx c7"></div>
+                    <div class="cx c8"></div>
+                    <div class="cx c9"></div>
+                    <div class="cx c10"></div>
+                    <div class="cx c11"></div>
+                    <div class="cx c12"></div>
+                    <div class="cx c13"></div>
+                    <div class="cx c14"></div>
+                    <div class="cx c15"></div>
+                    <div class="cx c16"></div>
+                    <div class="cx c17"></div>
                 </div>
-                <div class="section">Some section</div>
-                <div class="section">Some section</div>
+                -->
+                <h1>Agenda 2030 para o Desenvolvimento Sustentável</h1>
+                <div class="opcoes">
+                    <div class="opcao"><a href="#objetivos">Objetivos</a></div>
+                    <div class="opcao"><a href="#indicadores">Indicadores</a></div>
+                    <div class="opcao"><a href="#projetos">Projetos</a></div>
+                    <div class="opcao"><a href="#agenda">Agenda</a></div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="slide">
+                    <h2>Objetivos</h2>
+                    <a class="next c1" href="javascript:$.fn.fullpage.moveSlideRight();"><i class="fa fa-step-forward" aria-hidden="true"></i></a>
+                </div>
+                <?php
+                    //Busca os ODS e os apresenta na tela
+                    $sql = 'select id_ods, nom_ods, dsc_ods
+                            from ods order by id_ods;';
+                    $result = $conn->query($sql);
+                    while( $row = $result->fetch_assoc() ) {
+                        echo "<div class=\"slide c{$row['id_ods']}\">";
+                        echo "<div class='titulo'><h2>Objetivo {$row['id_ods']}. {$row['nom_ods']}</h2>";
+                        echo "<span class=\"dsc\">{$row['dsc_ods']}</span></div>";
+
+                        $sql = "select m.id_meta, m.num_meta, m.dsc_meta
+                                from meta m where m.id_ods = {$row['id_ods']}
+                                order by m.num_meta;";
+                        $metas = $conn->query($sql);
+                        echo '<ul class="metas">';
+                        while( $meta = $metas->fetch_assoc() ) {
+                            echo "<li>{$meta[num_meta]} - {$meta['dsc_meta']}</li>";
+                        }
+                        echo '</ul>';
+
+                        echo '<a class="prev c' . ($row['id_ods'] - 1) . '" href="javascript:$.fn.fullpage.moveSlideLeft();"><i class="fa fa-step-backward" aria-hidden="true"></i></a>';
+                        if( $row['id_ods'] < 17 ){
+                            echo '<a class="next c' . ($row['id_ods'] + 1) . '" href="javascript:$.fn.fullpage.moveSlideRight();"><i class="fa fa-step-forward" aria-hidden="true"></i></a>';
+                        }
+                        echo '</div>';
+                    }
+                ?>
+            </div>
+            <div class="section">
+                <h2>Indicadores</h2>
+            </div>
+            <div class="section">
+                <h2>Projetos</h2>
+            </div>
+            <div class="section">
+                <h2>Agenda</h2>
             </div>
         </div>
-        <div id="preload1"></div>
-        <div id="preload2"></div>
-        <div id="preload3"></div>
     </body>
-    </html>
     <script>
         $(document).ready(function() {
-            $('#fullpage').fullpage();
+            $('#fullpage').fullpage({
+                anchors: ['abertura', 'objetivos', 'indicadores', 'projetos', 'agenda'],
+                controlArrows: false
+            });
         });
     </script>
+    </html>
     <?
 }
 
