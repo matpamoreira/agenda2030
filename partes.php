@@ -115,7 +115,7 @@ http://html-tuts.com/css-arrows-up-down-left-right-triangle/
                     $result = $conn->query($sql);
                     while( $row = $result->fetch_assoc() ) {
                         echo "<div class=\"slide c{$row['id_ods']}\">";
-                        echo "<div class='titulo'><h2>Objetivo {$row['id_ods']}. {$row['nom_ods']}</h2>";
+                        echo "<div class='titulo'><h2>{$row['id_ods']}. {$row['nom_ods']}</h2>";
                         echo "<span class=\"dsc\">{$row['dsc_ods']}</span></div>";
 
                         $sql = "select m.id_meta, m.num_meta, m.dsc_meta

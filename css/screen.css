@@ -4,8 +4,20 @@
     }
 }
 @media screen and (max-width:480px){
+    h2{
+        margin:10px 0 6px;
+        font-size:1.6em;
+        padding-left:75px;
+    }
     .opcao a{
         font-size:1em;
+    }
+    .titulo{
+        padding-left:10px;
+        margin-right:10px;
+    }
+    .titulo:before{
+        left:10px;
     }
 }
 @media screen and (max-width:320px){
@@ -21,5 +33,15 @@
     .opcao a:after {
         display:inline;
         margin:0 0 0 5px;
+    }
+    h2{
+        padding-left:75px;
+        margin-bottom:6px;
+    }
+    .titulo h2:before{
+        content:'';
+    }
+    .titulo{
+        padding-left:10px;
     }
 }

@@ -61,7 +61,7 @@ h1{
   color:@cor_titulo;
 }
 h2{
-  margin:30px auto 2px;
+  margin:30px 0 2px;
   font-size:1.8em;
   clear:both;
   color:inherit;
@@ -194,13 +194,13 @@ h2{
   margin-bottom:10px;
   position:relative;
   padding-left:110px;
+  margin-right:30px;
 }
 .titulo:before{
   display:block;
   position:absolute;
   top:0;
   left:30px;
-  display:block;
   content:'';
   height:60px;
   width:60px;
@@ -208,6 +208,9 @@ h2{
   -webkit-box-shadow:-1px 1px 2px 0px;
   -moz-box-shadow:-1px 1px 2px 0px;
   box-shadow:-1px 1px 2px 0px;
+}
+.titulo h2:before{
+  content: 'Objetivo ';
 }
 .c1 .titulo:before{
   background-color:@cor_ods1;
