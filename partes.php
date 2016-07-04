@@ -68,7 +68,7 @@ function getInicio(){
     </head>
     <body>
         <div id="fullpage">
-            <div class="section">
+            <div class="section abertura">
                 <!--
                 https://css-tricks.com/snippets/css/css-triangle/
                 http://tympanus.net/Development/ArrowNavigationStyles/
@@ -95,7 +95,12 @@ http://html-tuts.com/css-arrows-up-down-left-right-triangle/
                     <div class="cx c17"></div>
                 </div>
                 -->
-                <h1>Agenda 2030 para o Desenvolvimento Sustentável</h1>
+                <video autoplay muted loop>
+                    <!--<source src="img/DockHdr.mp4" type="video/mp4">-->
+                </video>
+                <h1><div>Agenda 2030</div> para o Desenvolvimento Sustentável</h1>
+                <div id="teste"></div>
+                <script>$('#teste').html('width: ' + $( window ).width() + ' - ' + $( document ).width() + '<br/>height: ' + $( window ).height() + ' - ' + $( document ).height());</script>
                 <div class="opcoes">
                     <div class="opcao"><a href="#objetivos">Objetivos</a></div>
                     <div class="opcao"><a href="#indicadores">Indicadores</a></div>
@@ -104,8 +109,14 @@ http://html-tuts.com/css-arrows-up-down-left-right-triangle/
                 </div>
             </div>
             <div class="section">
-                <div class="slide">
+                <script type="text/javascript" src="js/d3.v3.min.js"></script>
+                <script type="text/javascript" src="js/sunburst.js"></script>
+                <div class="slide objetivos">
                     <h2>Objetivos</h2>
+                    <div>
+                        <div id="grafico_menu"></div>
+                        <script>gerarSunburst();</script>
+                    </div>
                     <a class="next c1" href="javascript:$.fn.fullpage.moveSlideRight();"><i class="fa fa-step-forward" aria-hidden="true"></i></a>
                 </div>
                 <?php
@@ -136,13 +147,34 @@ http://html-tuts.com/css-arrows-up-down-left-right-triangle/
                     }
                 ?>
             </div>
-            <div class="section">
+
+            <?
+            /**
+             * Página sobre os Indicadores
+             */
+            ?>
+            <div class="section indicadores">
                 <h2>Indicadores</h2>
             </div>
-            <div class="section">
+
+            <?
+            /**
+             * Página sobre os Projetos
+             */
+            ?>
+            <div class="section projetos">
+                <video autoplay muted id="myVideo" loop data-keepplaying>
+                    <source src="img/formiga.mp4" type="video/mp4">
+                </video>
                 <h2>Projetos</h2>
             </div>
-            <div class="section">
+
+            <?
+            /**
+             * Página sobre os Projetos
+             */
+            ?>
+            <div class="section agenda">
                 <h2>Agenda</h2>
             </div>
         </div>
@@ -151,7 +183,11 @@ http://html-tuts.com/css-arrows-up-down-left-right-triangle/
         $(document).ready(function() {
             $('#fullpage').fullpage({
                 anchors: ['abertura', 'objetivos', 'indicadores', 'projetos', 'agenda'],
-                controlArrows: false
+                controlArrows: false,
+                loopHorizontal: false,
+                afterRender: function(){
+                    $('video').get(0).play();
+                }
             });
         });
     </script>
