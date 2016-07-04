@@ -1,5 +1,4 @@
 function gerarSunburst(){
-    $('#grafico_menu').addClass('carregando');
     $("#explanation").css("visibility", "hidden");
 
     var cores = {
@@ -23,9 +22,9 @@ function gerarSunburst(){
         '17': '#1D5A7C'
     };
 
-    var width       = 450,
-        height      = 450,
-        radius      = Math.min(width, height) / 2;
+    var width  = Math.min($( document ).height() * 0.8),
+        height = Math.min($( document ).height() * 0.8),
+        radius = Math.min(width, height) / 2;
 
     var x = d3.scale.linear()
         .range([0, 2 * Math.PI]);

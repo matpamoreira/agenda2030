@@ -68,7 +68,7 @@ function getInicio(){
     </head>
     <body>
         <header>
-            <div id="menu-burger-wrapper" class="" style="left: -66px; transform: matrix(1, 0, 0, 1, 0, 0);">
+            <div id="menu-burger-wrapper">
                 <div class="line-burger"></div>
                 <div id="menu-burger">
                     <div class="line line-1"></div>
@@ -159,7 +159,7 @@ http://educationaboveall.org
              */
             ?>
             <div class="section projetos">
-                <video autoplay="" muted="" id="video_projetos" loop="" data-keepplaying>
+                <video id="video_projetos" autoplay="" muted="" loop="" data-keepplaying>
                     <source src="img/formiga.webm" type="video/webm"/>
                     <source src="img/formiga.mp4" type="video/mp4"/>
                 </video>
@@ -173,6 +173,16 @@ http://educationaboveall.org
             ?>
             <div class="section agenda">
                 <h2>Agenda</h2>
+                <footer>
+                    <div id="footer-button"></div>
+                    <div class="footer-container">
+                        <div id="footer-small">
+                            Desenvolvido por PNUD
+                        </div>
+                        <div id="footer-big">
+                        </div>
+                    </div>
+                </footer>
             </div>
         </div>
     </body>
@@ -180,6 +190,9 @@ http://educationaboveall.org
         $(document).ready(function() {
             $('#fullpage').fullpage({
                 anchors: ['abertura', 'objetivos', 'indicadores', 'projetos', 'agenda'],
+                navigationTooltips: ['Abertura', 'Objetivos', 'Indicadores', 'Projetos', 'Agenda'],
+                navigation: true,
+                navigationPosition: 'left',
                 controlArrows: false,
                 loopHorizontal: false,
                 afterRender: function(){
