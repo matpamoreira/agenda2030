@@ -67,6 +67,16 @@ function getInicio(){
         <script type="text/javascript" src="js/brain.js.php"></script>
     </head>
     <body>
+        <header>
+            <div id="menu-burger-wrapper" class="" style="left: -66px; transform: matrix(1, 0, 0, 1, 0, 0);">
+                <div class="line-burger"></div>
+                <div id="menu-burger">
+                    <div class="line line-1"></div>
+                    <div class="line line-2"></div>
+                    <div class="line line-3"></div>
+                </div>
+            </div>
+        </header>
         <div id="fullpage">
             <div class="section abertura">
                 <!--
@@ -75,25 +85,10 @@ function getInicio(){
 http://html-tuts.com/css-arrows-up-down-left-right-triangle/
                 http://tympanus.net/Development/HoverEffectIdeas/index.html
                 http://www.cssauthor.com/jquery-css3-hover-effects/
-                <div class="gesso">
-                    <div class="cx c1"></div>
-                    <div class="cx c2"></div>
-                    <div class="cx c3"></div>
-                    <div class="cx c4"></div>
-                    <div class="cx c5"></div>
-                    <div class="cx c6"></div>
-                    <div class="cx c7"></div>
-                    <div class="cx c8"></div>
-                    <div class="cx c9"></div>
-                    <div class="cx c10"></div>
-                    <div class="cx c11"></div>
-                    <div class="cx c12"></div>
-                    <div class="cx c13"></div>
-                    <div class="cx c14"></div>
-                    <div class="cx c15"></div>
-                    <div class="cx c16"></div>
-                    <div class="cx c17"></div>
-                </div>
+http://www.akaru.fr/
+
+http://www.sony-asia.com/microsite/mdr-10/#aboutPage
+http://educationaboveall.org
                 -->
                 <video autoplay muted loop>
                     <!--<source src="img/DockHdr.mp4" type="video/mp4">-->
@@ -128,6 +123,7 @@ http://html-tuts.com/css-arrows-up-down-left-right-triangle/
                         echo "<div class=\"slide c{$row['id_ods']}\">";
                         echo "<div class='titulo'><h2>{$row['id_ods']}. {$row['nom_ods']}</h2>";
                         echo "<span class=\"dsc\">{$row['dsc_ods']}</span></div>";
+                        echo "<div class=\"d_ind\" id=\"inds_{$row['id_ods']}\"></div>";
 
                         $sql = "select m.id_meta, m.num_meta, m.dsc_meta
                                 from meta m where m.id_ods = {$row['id_ods']}
@@ -135,7 +131,7 @@ http://html-tuts.com/css-arrows-up-down-left-right-triangle/
                         $metas = $conn->query($sql);
                         echo '<ul class="metas">';
                         while( $meta = $metas->fetch_assoc() ) {
-                            echo "<li>{$meta[num_meta]} - {$meta['dsc_meta']}</li>";
+                            echo "<li class=\"meta\"><a href=\"javascript:mostraMeta({$row['id_ods']}, {$meta[id_meta]});\"><div>{$meta[num_meta]} - {$meta['dsc_meta']}</div></a></li>";
                         }
                         echo '</ul>';
 
@@ -163,8 +159,9 @@ http://html-tuts.com/css-arrows-up-down-left-right-triangle/
              */
             ?>
             <div class="section projetos">
-                <video autoplay muted id="myVideo" loop data-keepplaying>
-                    <source src="img/formiga.mp4" type="video/mp4">
+                <video autoplay="" muted="" id="video_projetos" loop="" data-keepplaying>
+                    <source src="img/formiga.webm" type="video/webm"/>
+                    <source src="img/formiga.mp4" type="video/mp4"/>
                 </video>
                 <h2>Projetos</h2>
             </div>
@@ -186,32 +183,20 @@ http://html-tuts.com/css-arrows-up-down-left-right-triangle/
                 controlArrows: false,
                 loopHorizontal: false,
                 afterRender: function(){
-                    $('video').get(0).play();
+                    $('#video_projetos').get(0).play();
                 }
             });
         });
-    </script>
-    </html>
-    <?
-}
 
-function getFim(){
-    global $NOM_SISTEMA;
-    ?>
-    </div>
-    <div class="clear"></div>
-    <footer>
-        <nav id="mapa_site"></nav>
-        <script language="javascript" type="text/javascript">
-            //gerarTransformacao('mapa_site', 'menu/menu.php', 'menu/menu.xsl');
-        </script>
-        <div class="clear"></div>
-        <div class="copyright">Plataforma Agenda 2030 para o Desenvolvimento Sustentável</div>
-    </footer>
-    <div id="preload1"></div>
-    <div id="preload2"></div>
-    <div id="preload3"></div>
-    </body>
+        window.smartlook||(function(d) {
+            var o=smartlook=function(){ o.api.push(arguments)},s=d.getElementsByTagName('script')[0];
+            var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+            c.charset='utf-8';c.src='//rec.getsmartlook.com/bundle.js';s.parentNode.insertBefore(c,s);
+        })(document);
+        smartlook('init', '9128cea0314f08f8198ffea0e11d9eb6fcf61349');
+        smartlook('tag', 's', 'AG');
+
+    </script>
     </html>
     <?
 }
