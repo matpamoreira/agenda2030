@@ -82,7 +82,7 @@ h2{
 }
 .c1 h2{
   text-shadow:-1px 1px 2px darken(@cor_ods1, 20%);
-  color:@cor_ods1;
+  color:inherit;
 }
 .c2 h2{
   text-shadow:-1px 1px 2px darken(@cor_ods2, 20%);
@@ -356,7 +356,25 @@ path{
 #grafico_menu{
   text-align:center;
   width:100%;
+  position:relative;
+  display:table;
+  vertical-align:middle;
 }
+#ex_wp{
+  position:absolute;
+  top:0;
+  overflow:visible;
+  pointer-events:none;
+  background-color:transparent !important;
+}
+#explanation{
+  overflow:visible;
+  pointer-events:none;
+  display:table-cell;
+  vertical-align:middle;
+  font-size:2em;
+}
+
 .slide{
   text-align:left;
   position:relative;
@@ -452,6 +470,7 @@ path{
 }
 .c1 .meta{
   border-color:@cor_ods1;
+  color:@cor_ods1;
   background-color:lighten(@cor_ods1, 20%);
 }
 .c2 .meta{
@@ -523,15 +542,30 @@ path{
   float:right;
   margin-right:30px;
 }
+#btt_objetivos, .slide .prev, .slide .next{
+  bottom:0;
+  position:absolute;
+  cursor:pointer;
+  z-index:3;
+  width:40px;
+  height:40px;
+}
+#btt_objetivos{
+  left:50%;
+  margin-left:-20px;
+  background:white url('../img/logo_pq.png') no-repeat center center;
+  background-size:30px 30px;
+}
 .slide .prev, .slide .next{
   line-height:1;
   display:block;
-  position:absolute;
-  bottom:20px;
   font-size:20px;
-  padding:15px 20px;
   text-align:center;
-  z-index:3;
+  display:table;
+}
+.slide .prev i, .slide .next i{
+  display:table-cell;
+  vertical-align:middle;
 }
 .slide .prev{
   left:0;
@@ -578,13 +612,13 @@ header{
 #menu-burger-wrapper{
   position:absolute;
   top:0;
-  right:20px;
-  transform: matrix(1, 0, 0, 1, 0, 0);
+  right:30px;
+  transform:matrix(1, 0, 0, 1, 0, 0);
   transition:all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
 }
 .line-burger{
   background-color:@cor_det_menu;
-  height:35px;
+  height:25px;
   left:0;
   margin:0 auto 5px;
   position:relative;
@@ -596,30 +630,29 @@ header{
   background-color:@cor_menu;
   -moz-user-select:none;
   cursor:pointer;
-  height:32px;
-  padding-top:12px;
-  width:44px;
+  height:30px;
+  width:30px;
   border:1px solid @cor_det_menu;
 }
 #menu-burger .line{
   background-color:@cor_det_menu;
   height:2px;
-  margin-bottom:7px;
-  transform:translateX(7px);
+  margin-top:6px;
+  transform:translateX(6px);
   transition:all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
-  width:30px;
+  width:18px;
 }
 #menu-burger:hover .line-1{
-  transform:translateX(12px);
-  width:20px;
+  transform:translateX(10px);
+  width:16px;
 }
 #menu-burger:hover .line-2{
-  transform:translateX(27px);
-  width:10px;
+  transform:translateX(12px);
+  width:9px;
 }
 #menu-burger:hover .line-3{
   transform:translateX(7px);
-  width:15px;
+  width:13px;
 }
 .menu-opened #menu-burger:hover .line-1{
   transform:translate(12px, 9px) rotate(45deg);
@@ -650,7 +683,7 @@ header{
   transform:translate(7px, -9px) rotate(-45deg);
 }
 #menu-wrapper{
-  background-color:#fff;
+  background-color:@cor_det_menu;
   height:100%;
   left:0;
   position:absolute;
@@ -901,7 +934,7 @@ footer{
   transform:rotate(90deg);
 }
 #footer-button::after{
-  background-color:#fff;
+  background-color:@cor_det_menu;
   content:"";
   display:block;
   height:20px;

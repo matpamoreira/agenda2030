@@ -1,6 +1,4 @@
 function gerarSunburst(){
-    $("#explanation").css("visibility", "hidden");
-
     var cores = {
         '0': '#FFFFFF',
         '1': '#ED3A4B',
@@ -22,39 +20,18 @@ function gerarSunburst(){
         '17': '#1D5A7C'
     };
 
-    var width  = Math.min($( document ).height() * 0.8),
-        height = Math.min($( document ).height() * 0.8),
+    var width  = Math.floor($( document ).width() * 0.8),
+        height = Math.floor($( document ).height() * 0.8),
         radius = Math.min(width, height) / 2;
 
+    $('#explanation').css('height', height - 20);
+    $('#ex_wp').css('width', radius);
+    $('#ex_wp').css('left', Math.floor(($( document ).width() / 2) - (radius / 2)) + 10);
     var x = d3.scale.linear()
         .range([0, 2 * Math.PI]);
 
     var y = d3.scale.sqrt()
         .range([0, radius]);
-
-    var root = {
-        'name':'0',
-        'size':17,
-        'children':[
-            {'name':'1','size':'1'},
-            {'name':'2','size':'1'},
-            {'name':'3','size':'1'},
-            {'name':'4','size':'1'},
-            {'name':'5','size':'1'},
-            {'name':'6','size':'1'},
-            {'name':'7','size':'1'},
-            {'name':'8','size':'1'},
-            {'name':'9','size':'1'},
-            {'name':'10','size':'1'},
-            {'name':'11','size':'1'},
-            {'name':'12','size':'1'},
-            {'name':'13','size':'1'},
-            {'name':'14','size':'1'},
-            {'name':'15','size':'1'},
-            {'name':'16','size':'1'},
-            {'name':'17','size':'1'}
-        ]
-    };
 
     var svg = d3.select("#grafico_menu").append("svg")
         .attr("width", width)
@@ -89,9 +66,9 @@ function gerarSunburst(){
             return 'transparent';
         }
         if( !d.parent || !d.parent.parent ){
-            return cores[d.name];
+            return cores[d.chave];
         }
-        c = d3.rgb(cores[d.parent.name]);
+        c = d3.rgb(cores[d.parent.chave]);
         return c.brighter(0.5 * (d.parent.children.indexOf(d) + 1));
     }
 
@@ -105,20 +82,18 @@ function gerarSunburst(){
         .on("click", click);
 
     d3.select("#container").on("mouseleave", out);
+
     totalSize = path.node().__data__.value;
 
-    var semAcao = false;
     function over(d){
-        if(semAcao){
+        if(d.parent == undefined){
+            d3.select("#explanation").style("visibility", "hidden");
             return;
         }
-        var percentage = (100 * d.value / totalSize).toPrecision(3);
-        var percentageString = percentage.replace('.', ',') + '%';
-
-        d3.select("#percentage").text(percentageString);
-        d3.select("#grupo").text(d.name);
-        d3.select("#explanation")
-            .style("visibility", "");
+        $("#ex_wp").removeClass();
+        $("#ex_wp").addClass('c' + d.chave);
+        d3.select("#explanation").html('Objetivo ' + d.chave + ': ' + d.name);
+        d3.select("#explanation").style("visibility", "");
 
         var sequenceArray = getAncestors(d);
 
@@ -132,7 +107,7 @@ function gerarSunburst(){
             .style("opacity", 1);
     }
 
-    function getAncestors(node) {
+    function getAncestors(node){
         var path = [];
         var current = node;
         while (current) {
@@ -142,17 +117,7 @@ function gerarSunburst(){
         return path;
     }
 
-    var ultimoD = undefined;
-
     function out(){
-        if(semAcao){
-            return;
-        }
-        if( ultimoD != undefined ){
-            over(ultimoD);
-            return;
-        }
-
         // Deactivate all segments during transition.
         d3.selectAll("path").on("mouseover", null);
 
@@ -172,7 +137,7 @@ function gerarSunburst(){
     }
 
     function click(d){
-        $.fn.fullpage.moveTo(2, d.name);
+        $.fn.fullpage.moveTo(2, d.chave);
     }
 
     d3.select(self.frameElement).style("height", height + "px");

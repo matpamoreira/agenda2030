@@ -86,7 +86,7 @@ http://html-tuts.com/css-arrows-up-down-left-right-triangle/
                 http://tympanus.net/Development/HoverEffectIdeas/index.html
                 http://www.cssauthor.com/jquery-css3-hover-effects/
 http://www.akaru.fr/
-
+http://enjoycss.com/start#transition
 http://www.sony-asia.com/microsite/mdr-10/#aboutPage
 http://educationaboveall.org
                 -->
@@ -109,8 +109,31 @@ http://educationaboveall.org
                 <div class="slide objetivos">
                     <h2>Objetivos</h2>
                     <div>
-                        <div id="grafico_menu"></div>
-                        <script>gerarSunburst();</script>
+                        <div id="grafico_menu">
+                            <div id="ex_wp"><h2 id="explanation"></h2></div>
+                        </div>
+                        <script>
+                            var root = {
+                                'name':'0',
+                                'size':17,
+                                'children':[
+                            <?
+                                $sql = 'select id_ods, nom_ods, dsc_ods
+                                                        from ods order by id_ods;';
+                                $result = $conn->query($sql);
+                                $cont = 1;
+                                while( $row = $result->fetch_assoc() ) {
+                                    if( $cont != 1 ){
+                                        echo ',';
+                                    }
+                                    echo "{'chave':'{$row['id_ods']}','name':'{$row['nom_ods']}','size':'1'}\n\r";
+                                    $cont++;
+                                }
+                            ?>
+                                ]
+                            };
+                            gerarSunburst();
+                        </script>
                     </div>
                     <a class="next c1" href="javascript:$.fn.fullpage.moveSlideRight();"><i class="fa fa-step-forward" aria-hidden="true"></i></a>
                 </div>
@@ -131,11 +154,12 @@ http://educationaboveall.org
                         $metas = $conn->query($sql);
                         echo '<ul class="metas">';
                         while( $meta = $metas->fetch_assoc() ) {
-                            echo "<li class=\"meta\"><a href=\"javascript:mostraMeta({$row['id_ods']}, {$meta[id_meta]});\"><div>{$meta[num_meta]} - {$meta['dsc_meta']}</div></a></li>";
+                            echo "<li class=\"meta\"><a title=\"Detalhar meta\" href=\"javascript:mostraMeta({$row['id_ods']}, {$meta[id_meta]});\"><div>{$meta[num_meta]} - {$meta['dsc_meta']}</div></a></li>";
                         }
                         echo '</ul>';
 
                         echo '<a class="prev c' . ($row['id_ods'] - 1) . '" href="javascript:$.fn.fullpage.moveSlideLeft();"><i class="fa fa-step-backward" aria-hidden="true"></i></a>';
+                        echo '<div id="btt_objetivos" onclick="toogleMenu();"></div>';
                         if( $row['id_ods'] < 17 ){
                             echo '<a class="next c' . ($row['id_ods'] + 1) . '" href="javascript:$.fn.fullpage.moveSlideRight();"><i class="fa fa-step-forward" aria-hidden="true"></i></a>';
                         }
@@ -188,11 +212,12 @@ http://educationaboveall.org
     </body>
     <script>
         $(document).ready(function() {
+            //navigationTooltips: ['Abertura', 'Objetivos', 'Indicadores', 'Projetos', 'Agenda'],
+            //navigation: true,
+            //navigationPosition: 'left',
+
             $('#fullpage').fullpage({
                 anchors: ['abertura', 'objetivos', 'indicadores', 'projetos', 'agenda'],
-                navigationTooltips: ['Abertura', 'Objetivos', 'Indicadores', 'Projetos', 'Agenda'],
-                navigation: true,
-                navigationPosition: 'left',
                 controlArrows: false,
                 loopHorizontal: false,
                 afterRender: function(){
