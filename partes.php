@@ -95,6 +95,10 @@ http://educationaboveall.org
                 </video>
                 <h1><div>Agenda 2030</div> para o Desenvolvimento Sustentável</h1>
                 <div id="teste"></div>
+                <form class="cadastro" action="javascript:cadastrar();">
+                    <label for="email">Seu e-mail:</label><input id="email" type="text" name="email"/>
+                    <button type="submit">Cadastrar</button>
+                </form>
                 <script>$('#teste').html('width: ' + $( window ).width() + ' - ' + $( document ).width() + '<br/>height: ' + $( window ).height() + ' - ' + $( document ).height());</script>
                 <div class="opcoes">
                     <div class="opcao"><a href="#objetivos">Objetivos</a></div>
@@ -154,7 +158,7 @@ http://educationaboveall.org
                         $metas = $conn->query($sql);
                         echo '<ul class="metas">';
                         while( $meta = $metas->fetch_assoc() ) {
-                            echo "<li class=\"meta\"><a title=\"Detalhar meta\" href=\"javascript:mostraMeta({$row['id_ods']}, {$meta[id_meta]});\"><div>{$meta[num_meta]} - {$meta['dsc_meta']}</div></a></li>";
+                            echo "<li class=\"meta\" id=\"m{$meta[num_meta]}\"><a title=\"Detalhar meta\" href=\"javascript:mostraMeta({$row['id_ods']}, {$meta[id_meta]});\"><div>{$meta[num_meta]} - {$meta['dsc_meta']}</div></a></li>";
                         }
                         echo '</ul>';
 
