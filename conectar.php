@@ -1,6 +1,6 @@
 <?php
 
-$servername   = "fiscalize.cg5foykmezxr.us-west-2.rds.amazonaws.com";
+$servername   = "diagnosticopublico-cluster.cluster-czzcnh6qx1i8.us-east-1.rds.amazonaws.com";
 $username     = "agenda2030";
 $password     = "pnud4mti";
 $NAME_DB      = "agenda2030";
