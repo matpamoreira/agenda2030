@@ -4,8 +4,9 @@ $array = array();
 $id_meta = $_REQUEST['meta'];
 
 $sql = "select i.nom_indicador, i.dsc_base_dados, i.dsc_fonte
-        from indicador i
-        where i.id_meta = $id_meta order by i.id_indicador;";
+          from dim_indicador i
+         where i.seq_dim_meta = $id_meta
+         order by i.seq_dim_indicador;";
 $result = $conn->query($sql);
 if( $result->num_rows > 0 ) {
     $cont = 1;
