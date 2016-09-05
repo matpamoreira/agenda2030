@@ -362,7 +362,7 @@ video{
   background:url('../img/DockHdr.png') no-repeat scroll center center / cover;
 }
 .objetivos{
-  background:url('../img/crater-lake.gif') no-repeat scroll center center / cover;
+  /*background:url('../img/crater-lake.gif') no-repeat scroll center center / cover;*/
 }
 path{
   cursor:pointer;
@@ -466,10 +466,56 @@ path{
   overflow:hidden;
   padding:10px 0;
   text-align:justify;
+  z-index:1;
 }
 .d_ind{
-  float:right;
+  position:absolute!important;
+  right:0;
+  height:76%;
   margin:20px 30px 0 0;
+  padding:10px;
+  z-index:2;
+  background-color:#FEFEFE;
+  display:none;
+  overflow-y:scroll;
+}
+.d_ind:empty{
+  height:0;
+  width:0;
+}
+.d_ind h4{
+  margin:10px 0 10px 10px;
+  font-size:18px;
+}
+.d_ind .fechar{
+  position:absolute;
+  top:2px;
+  right:2px;
+  color:#ffffff;
+  background-color:#3C3C3C;
+  font-weight:bold;
+  font-size:16px;
+  width:20px;
+  height:20px;
+  text-align:center;
+  text-decoration:none!important;
+}
+.d_ind table a{
+  color:inherit;
+  text-decoration:underline;
+}
+.d_ind .detInd{
+  display:none;
+  font-size:12px;
+}
+.d_ind .detInd td.dados{
+  position:relative;
+  width:100%;
+  border-style:solid;
+  border-width:0 1px 1px 0;
+}
+.d_ind .detInd td.dados td{
+  padding: 4px 2px;
 }
 .meta{
   padding:10px 15px;
@@ -608,8 +654,9 @@ path{
   right:0;
 }
 .carregando{
-  display:block !important;
-  height:40px;
+  display:block!important;
+  height:40px!important;
+  width:100px!important;
   font-size:16px;
   background-image:url("../img/load.gif") !important;
   background-repeat:no-repeat !important;
@@ -929,6 +976,13 @@ table th{
 table tbody td{
   padding:5px 10px;
   border-right:1px solid;
+  text-align:center;
+}
+td.rot{
+  text-align:left!important;
+}
+td.tp{
+  white-space:pre;
 }
 .c1 td{
   border-color:lighten(@cor_ods1, 20%);
@@ -1050,4 +1104,23 @@ footer{
   top:-23px;
   width:40px;
   z-index:2;
+}
+
+
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
 }

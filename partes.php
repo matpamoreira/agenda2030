@@ -65,6 +65,9 @@ function getInicio(){
         <script type="text/javascript" src="js/xsl.js"></script>
         <script type="text/javascript" src="js/util.js"></script>
         <script type="text/javascript" src="js/brain.js.php"></script>
+
+        <script src="//d3js.org/d3.v3.min.js"></script>
+        <script type="text/javascript" src="js/grafico.js"></script>
     </head>
     <body>
         <header>
@@ -100,7 +103,7 @@ http://educationaboveall.org
                     <button type="submit">Cadastrar</button>
                 </form>
                 <script>$('#teste').html('width: ' + $( window ).width() + ' - ' + $( document ).width() + '<br/>height: ' + $( window ).height() + ' - ' + $( document ).height());</script>
-                <div class="opcoes">
+                <div id="menu_opcoes" class="opcoes">
                     <div class="opcao"><a href="#objetivos">Objetivos</a></div>
                     <div class="opcao"><a href="#indicadores">Indicadores</a></div>
                     <div class="opcao"><a href="#projetos">Projetos</a></div>
@@ -122,15 +125,15 @@ http://educationaboveall.org
                                 'size':17,
                                 'children':[
                             <?
-                                $sql = 'select id_ods, nom_ods, dsc_ods
-                                                        from ods order by id_ods;';
+                                $sql = 'select seq_dim_ods, nom_ods, dsc_ods
+                                          from dim_ods order by seq_dim_ods;';
                                 $result = $conn->query($sql);
                                 $cont = 1;
                                 while( $row = $result->fetch_assoc() ) {
                                     if( $cont != 1 ){
                                         echo ',';
                                     }
-                                    echo "{'chave':'{$row['id_ods']}','name':'{$row['nom_ods']}','size':'1'}\n\r";
+                                    echo "{'chave':'{$row['seq_dim_ods']}','name':'{$row['nom_ods']}','size':'1'}\n\r";
                                     $cont++;
                                 }
                             ?>
@@ -143,29 +146,31 @@ http://educationaboveall.org
                 </div>
                 <?php
                     //Busca os ODS e os apresenta na tela
-                    $sql = 'select id_ods, nom_ods, dsc_ods
-                            from ods order by id_ods;';
+                    $sql = 'select seq_dim_ods, nom_ods, dsc_ods
+                              from dim_ods
+                             order by seq_dim_ods;';
                     $result = $conn->query($sql);
                     while( $row = $result->fetch_assoc() ) {
-                        echo "<div class=\"slide c{$row['id_ods']}\">";
-                        echo "<div class='titulo'><h2>{$row['id_ods']}. {$row['nom_ods']}</h2>";
+                        echo "<div class=\"slide c{$row['seq_dim_ods']}\">";
+                        echo "<div class='titulo'><h2>{$row['seq_dim_ods']}. {$row['nom_ods']}</h2>";
                         echo "<span class=\"dsc\">{$row['dsc_ods']}</span></div>";
-                        echo "<div class=\"d_ind\" id=\"inds_{$row['id_ods']}\"></div>";
+                        echo "<div class=\"d_ind\" id=\"inds_{$row['seq_dim_ods']}\"></div>";
 
-                        $sql = "select m.id_meta, m.num_meta, m.dsc_meta
-                                from meta m where m.id_ods = {$row['id_ods']}
-                                order by m.num_meta;";
+                        $sql = "select m.seq_dim_meta, m.num_meta, m.dsc_meta
+                                  from dim_meta m
+                                 where m.seq_dim_ods = {$row['seq_dim_ods']}
+                                 order by m.num_meta;";
                         $metas = $conn->query($sql);
                         echo '<ul class="metas">';
                         while( $meta = $metas->fetch_assoc() ) {
-                            echo "<li class=\"meta\" id=\"m{$meta[num_meta]}\"><a title=\"Detalhar meta\" href=\"javascript:mostraMeta({$row['id_ods']}, {$meta[id_meta]});\"><div>{$meta[num_meta]} - {$meta['dsc_meta']}</div></a></li>";
+                            echo "<li class=\"meta\" id=\"m{$meta['seq_dim_meta']}\"><a title=\"Detalhar meta\" href=\"javascript:mostraMeta({$row['seq_dim_ods']}, {$meta['seq_dim_meta']});\"><div>{$meta['num_meta']} - {$meta['dsc_meta']}</div></a></li>";
                         }
                         echo '</ul>';
 
-                        echo '<a class="prev c' . ($row['id_ods'] - 1) . '" href="javascript:$.fn.fullpage.moveSlideLeft();"><i class="fa fa-step-backward" aria-hidden="true"></i></a>';
+                        echo '<a class="prev c' . ($row['seq_dim_ods'] - 1) . '" href="javascript:$.fn.fullpage.moveSlideLeft();"><i class="fa fa-step-backward" aria-hidden="true"></i></a>';
                         echo '<div id="btt_objetivos" onclick="toogleMenu();"></div>';
-                        if( $row['id_ods'] < 17 ){
-                            echo '<a class="next c' . ($row['id_ods'] + 1) . '" href="javascript:$.fn.fullpage.moveSlideRight();"><i class="fa fa-step-forward" aria-hidden="true"></i></a>';
+                        if( $row['seq_dim_ods'] < 17 ){
+                            echo '<a class="next c' . ($row['seq_dim_ods'] + 1) . '" href="javascript:$.fn.fullpage.moveSlideRight();"><i class="fa fa-step-forward" aria-hidden="true"></i></a>';
                         }
                         echo '</div>';
                     }
@@ -229,7 +234,7 @@ http://educationaboveall.org
                 }
             });
         });
-
+/*
         window.smartlook||(function(d) {
             var o=smartlook=function(){ o.api.push(arguments)},s=d.getElementsByTagName('script')[0];
             var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
@@ -237,7 +242,7 @@ http://educationaboveall.org
         })(document);
         smartlook('init', '9128cea0314f08f8198ffea0e11d9eb6fcf61349');
         smartlook('tag', 's', 'AG');
-
+*/
     </script>
     </html>
     <?
