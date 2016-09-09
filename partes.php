@@ -62,6 +62,7 @@ function getInicio(){
         <script type="text/javascript" src="js/jquery.number.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="js/jquery.fullpage.min.js"></script>
+        <script type="text/javascript" src="jquery.sparkline.js"></script>
         <script type="text/javascript" src="js/xsl.js"></script>
         <script type="text/javascript" src="js/util.js"></script>
         <script type="text/javascript" src="js/brain.js.php"></script>

@@ -34,6 +34,7 @@ function detIndicador(id_ind){
     $('#' + id_ind).css('display', 'table-row');
     var caixaValorInd = $('#' + id_ind + ' td.dados');
     caixaValorInd.addClass('carregando');
+    caixaValorInd.empty();
     $.ajax({
         url: 'funcoes/carrega_dados_indicador.php',
         data: { 'id_ind':id_ind },

@@ -17,6 +17,7 @@ $sql = "select dt.num_ano,
           from dim_valor_indicador dvi, dim_tempo dt
          where dvi.seq_dim_indicador = '$id_ind'
            and dvi.seq_dim_tempo = dt.seq_dim_tempo
+           and dt.num_ano >= 2001
          order by dsc_localidade, dsc_grupo_idade, dvi.ind_genero, dt.num_ano;";
 //echo $sql;
 $result = $conn->query($sql);
@@ -36,25 +37,37 @@ if( $result->num_rows > 0 ) {
         if( $ult_localidade  != $row['dsc_localidade'] or
             $ult_grupo_idade != $row['dsc_grupo_idade'] or
             $ult_genero      != $row['ind_genero'] ){
-            if( $corpo != '' ) $corpo .= '</tr>';
+            if( $corpo != '' ){
+                $corpo  .= '<td class="ln">' . substr($valores, 0, -1) . '</td></tr>';
+                $valores = '';
+            }
             $corpo .= '<tr>';
             $corpo .= "<td>{$row['dsc_localidade']}</td>";
             $corpo .= "<td class=\"tp\">{$row['dsc_grupo_idade']}</td>";
             $corpo .= "<td>{$row['ind_genero']}</td>";
         }
-        $corpo .= "<td>{$row['vlr_indicador']}</td>";
+        if( $row['vlr_indicador'] != 0 ){
+            $corpo .= "<td>{$row['vlr_indicador']}</td>";
+            $valores .= $row['vlr_indicador'] . ',';
+        }
+        else{
+            $corpo .= "<td>-</td>";
+            $valores .= 'null,';
+        }
         $ult_localidade  = $row['dsc_localidade'];
         $ult_grupo_idade = $row['dsc_grupo_idade'];
         $ult_genero      = $row['ind_genero'];
     }
-    $array['resultado']  = '<table>';
-    //<th></th>
-    $array['resultado'] .= '<thead><tr><th>Localidade</th><th>Grupo Idade</th><th>Género</th>';
+    $array['resultado']  = "<table id=\"t_$id_ind\">";
+    $array['resultado'] .= '<thead><tr><th>Localidade</th><th>Grupo Idade</th><th>Gênero</th>';
     $array['resultado'] .= $titulo;
-    $array['resultado'] .= '</tr></thead>';
+    $array['resultado'] .= '<th></th></tr></thead>';
     $array['resultado'] .= '<tbody>';
-    $array['resultado'] .= $corpo;
+    $array['resultado'] .= $corpo . '<td class="ln">' . substr($valores, 0, -1) . '</td>';
     $array['resultado'] .= '</tr></tbody></table>';
+    $array['resultado'] .= '<script type="text/javascript">';
+    $array['resultado'] .= "$('#t_$id_ind .ln').sparkline('html');";
+    $array['resultado'] .= '</script>';
 }
 else{
     $array['resultado'] = '<div>Sem dados</div>';
