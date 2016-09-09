@@ -21,7 +21,7 @@ sig.Series_Description,
 sig.Frequency,
 sig.Unit;
 
-//CARGA DOS VALORES DOS INDICADORES
+//CARGA DOS VALORES DOS INDICADORES [variar o ano]
 insert into dim_valor_indicador(seq_dim_indicador, seq_dim_tempo, seq_dim_tipo_dado, seq_dim_localidade, seq_dim_grupo_idade, ind_genero, vlr_indicador, dsc_fonte)
 select (select group_concat(di.seq_dim_indicador)
 from dim_indicador di,
