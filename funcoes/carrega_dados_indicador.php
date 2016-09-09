@@ -61,12 +61,12 @@ if( $result->num_rows > 0 ) {
     $array['resultado']  = "<table id=\"t_$id_ind\">";
     $array['resultado'] .= '<thead><tr><th>Localidade</th><th>Grupo Idade</th><th>Gênero</th>';
     $array['resultado'] .= $titulo;
-    $array['resultado'] .= '<th></th></tr></thead>';
+    $array['resultado'] .= '<th>Histograma</th></tr></thead>';
     $array['resultado'] .= '<tbody>';
     $array['resultado'] .= $corpo . '<td class="ln">' . substr($valores, 0, -1) . '</td>';
     $array['resultado'] .= '</tr></tbody></table>';
     $array['resultado'] .= '<script type="text/javascript">';
-    $array['resultado'] .= "$('#t_$id_ind .ln').sparkline('html');";
+    $array['resultado'] .= "$('#t_$id_ind .ln').sparkline('html', {type:'bar'});";
     $array['resultado'] .= '</script>';
 }
 else{

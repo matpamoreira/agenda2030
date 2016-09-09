@@ -6,7 +6,7 @@ function getInicio(){
     global $NOM_SISTEMA;
     global $NOM_PAGINA;
 
-    $DESC_SISTEMA = 'DESCRICAO DO SISTEMA';
+    $DESC_SISTEMA = 'Plataforma online da Agenda 2030 para o Desenvolvimento Sustentável';
     $PALAVRAS_CHV = 'PALABRAS CHAVE';
 
     include_once 'conectar.php';
@@ -62,7 +62,7 @@ function getInicio(){
         <script type="text/javascript" src="js/jquery.number.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="js/jquery.fullpage.min.js"></script>
-        <script type="text/javascript" src="jquery.sparkline.js"></script>
+        <script type="text/javascript" src="js/jquery.sparkline.min.js"></script>
         <script type="text/javascript" src="js/xsl.js"></script>
         <script type="text/javascript" src="js/util.js"></script>
         <script type="text/javascript" src="js/brain.js.php"></script>
@@ -162,6 +162,7 @@ http://educationaboveall.org
                                  where m.seq_dim_ods = {$row['seq_dim_ods']}
                                  order by m.num_meta;";
                         $metas = $conn->query($sql);
+                        echo '<span style="font-size:1.2em;margin-left:30px;">Metas:</span>';
                         echo '<ul class="metas">';
                         while( $meta = $metas->fetch_assoc() ) {
                             echo "<li class=\"meta\" id=\"m{$meta['seq_dim_meta']}\"><a title=\"Detalhar meta\" href=\"javascript:mostraMeta({$row['seq_dim_ods']}, {$meta['seq_dim_meta']});\"><div>{$meta['num_meta']} - {$meta['dsc_meta']}</div></a></li>";
