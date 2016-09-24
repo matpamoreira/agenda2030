@@ -23,22 +23,38 @@ $sql = "select dt.num_ano,
 $result = $conn->query($sql);
 $titulo = '';
 $corpo = '';
-if( $result->num_rows > 0 ) {
+if( $result->num_rows > 0 ){
     $ult_ano = '';
     $ult_localidade  = '';
     $ult_grupo_idade = '';
     $ult_genero      = '';
-    while ($row = $result->fetch_assoc()) {
+    $indicadores     = array();
+    $variaveisColuna = array();
+    $coluna1Mudou = false;
+    $coluna2Mudou = false;
+    $coluna3Mudou = false;
+    while( $row = $result->fetch_assoc() ){
         if( $row['num_ano'] > $ult_ano ){
-            $titulo .= "<th>{$row['num_ano']}</th>";
-            $ult_ano = $row['num_ano'];
+            $titulo  .= "<th>{$row['num_ano']}</th>";
+            $rotulos .= $row['num_ano'] . ',';
+            $ult_ano  = $row['num_ano'];
         }
 
         if( $ult_localidade  != $row['dsc_localidade'] or
             $ult_grupo_idade != $row['dsc_grupo_idade'] or
             $ult_genero      != $row['ind_genero'] ){
+            array_push($variaveisColuna, array($row['dsc_localidade'], $row['dsc_grupo_idade'], $row['ind_genero']));
             if( $corpo != '' ){
-                $corpo  .= '<td class="ln">' . substr($valores, 0, -1) . '</td></tr>';
+                if(!$coluna1Mudou && $ult_localidade != $row['dsc_localidade'] )
+                    $coluna1Mudou = true;
+                if(!$coluna2Mudou && $ult_grupo_idade != $row['dsc_grupo_idade'] )
+                    $coluna2Mudou = true;
+                if(!$coluna3Mudou && $ult_genero != $row['ind_genero'] )
+                    $coluna3Mudou = true;
+
+                $indicador['valores'] = substr($valores, 0, -1);
+                $corpo  .= '<td class="ln">' . $indicador['valores'] . '</td></tr>';
+                array_push($indicadores, $indicador);
                 $valores = '';
             }
             $corpo .= '<tr>';
@@ -58,16 +74,32 @@ if( $result->num_rows > 0 ) {
         $ult_grupo_idade = $row['dsc_grupo_idade'];
         $ult_genero      = $row['ind_genero'];
     }
-    $array['resultado']  = "<table id=\"t_$id_ind\">";
-    $array['resultado'] .= '<thead><tr><th>Localidade</th><th>Grupo Idade</th><th>Gênero</th>';
-    $array['resultado'] .= $titulo;
-    $array['resultado'] .= '<th>Histograma</th></tr></thead>';
-    $array['resultado'] .= '<tbody>';
-    $array['resultado'] .= $corpo . '<td class="ln">' . substr($valores, 0, -1) . '</td>';
-    $array['resultado'] .= '</tr></tbody></table>';
-    $array['resultado'] .= '<script type="text/javascript">';
-    $array['resultado'] .= "$('#t_$id_ind .ln').sparkline('html', {type:'bar'});";
-    $array['resultado'] .= '</script>';
+    $array['tabela']  = "<table id=\"t_$id_ind\">";
+    $array['tabela'] .= '<thead><tr><th>Localidade</th><th>Grupo Idade</th><th>Gênero</th>';
+    $array['tabela'] .= $titulo;
+    $array['tabela'] .= '<th>Histograma</th></tr></thead>';
+    $array['tabela'] .= '<tbody>';
+    $array['tabela'] .= $corpo . '<td class="ln">' . substr($valores, 0, -1) . '</td>';
+    $array['tabela'] .= '</tr></tbody></table>';
+    $array['tabela'] .= '<script type="text/javascript">';
+    $array['tabela'] .= "$('#t_$id_ind .ln').sparkline('html', {type:'bar'});";
+    $array['tabela'] .= '</script>';
+    $array['dados']['rotulos'] = substr($rotulos, 0, -1);
+    $indicador['valores'] = substr($valores, 0, -1);
+    array_push($indicadores, $indicador);
+    foreach( $indicadores as $key => &$ind ){
+        $ind['nome']  = '';
+        $ind['nome'] .= ($coluna1Mudou) ? ('Localidade: ' . $variaveisColuna[$key]{0} . ' / ') : '';
+        $ind['nome'] .= ($coluna2Mudou) ? ('Idade: ' . $variaveisColuna[$key]{1} . ' / ') : '';
+        $ind['nome'] .= ($coluna3Mudou) ? ('Gênero: ' . $variaveisColuna[$key]{2} . ' / ') : '';
+        if( strlen($ind['nome']) == 0 ) {
+            $ind['nome'] = 'Total';
+        }
+        else{
+            $ind['nome'] = substr($ind['nome'], 0, -3);
+        }
+    }
+    $array['dados']['indicadores'] = $indicadores;
 }
 else{
     $array['resultado'] = '<div>Sem dados</div>';

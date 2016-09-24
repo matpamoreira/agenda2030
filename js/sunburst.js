@@ -92,7 +92,7 @@ function gerarSunburst(){
         }
         $("#ex_wp").removeClass();
         $("#ex_wp").addClass('c' + d.chave);
-        d3.select("#explanation").html('Objetivo ' + d.chave + ': ' + d.name);
+        d3.select("#explanation").html('Objetivo ' + d.chave + ':<br/>' + d.name);
         d3.select("#explanation").style("visibility", "");
 
         var sequenceArray = getAncestors(d);

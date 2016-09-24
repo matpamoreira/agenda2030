@@ -67,12 +67,14 @@ function getInicio(){
         <script type="text/javascript" src="js/util.js"></script>
         <script type="text/javascript" src="js/brain.js.php"></script>
 
-        <script src="//d3js.org/d3.v3.min.js"></script>
+        <link href="js/c3-0.4.11/c3.css" rel="stylesheet" type="text/css">
+        <script src="js/d3.v3.min.js" charset="utf-8"></script>
+        <script src="js/c3-0.4.11/c3.min.js"></script>
         <script type="text/javascript" src="js/grafico.js"></script>
     </head>
     <body>
         <header>
-            <div id="menu-burger-wrapper">
+            <div id="menu-burger-wrapper" onclick="openNav();">
                 <div class="line-burger"></div>
                 <div id="menu-burger">
                     <div class="line line-1"></div>
@@ -81,6 +83,14 @@ function getInicio(){
                 </div>
             </div>
         </header>
+        <div id="mySidenav" class="sidenav">
+            <a href="#abertura">Abertura</a>
+            <a href="#objetivos">Objetivos</a>
+            <a href="#territorio">Território</a>
+            <a href="#projetos">Projetos</a>
+            <a href="#agenda">Agenda</a>
+            <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+        </div>
         <div id="fullpage">
             <div class="section abertura">
                 <!--
@@ -99,22 +109,29 @@ http://educationaboveall.org
                 </video>
                 <h1><div>Agenda 2030</div> para o Desenvolvimento Sustentável</h1>
                 <div id="teste"></div>
+                <script>
+                    $('#teste').html('width: ' + $( window ).width() + ' - ' + $( document ).width() + '<br/>height: ' + $( window ).height() + ' - ' + $( document ).height());
+                </script>
                 <form class="cadastro" action="javascript:cadastrar();">
                     <label for="email">Seu e-mail:</label><input id="email" type="text" name="email"/>
                     <button type="submit">Cadastrar</button>
                 </form>
-                <script>$('#teste').html('width: ' + $( window ).width() + ' - ' + $( document ).width() + '<br/>height: ' + $( window ).height() + ' - ' + $( document ).height());</script>
                 <div id="menu_opcoes" class="opcoes">
                     <div class="opcao"><a href="#objetivos">Objetivos</a></div>
-                    <div class="opcao"><a href="#indicadores">Indicadores</a></div>
+                    <div class="opcao"><a href="#territorio">Território</a></div>
                     <div class="opcao"><a href="#projetos">Projetos</a></div>
                     <div class="opcao"><a href="#agenda">Agenda</a></div>
                 </div>
             </div>
+
             <div class="section">
                 <script type="text/javascript" src="js/d3.v3.min.js"></script>
                 <script type="text/javascript" src="js/sunburst.js"></script>
                 <div class="slide objetivos">
+                    <div class="menu_pag btt_ant">
+                        <div class="triangulo"></div>
+                        <a href="#abertura">Abertura</a>
+                    </div>
                     <h2>Objetivos</h2>
                     <div>
                         <div id="grafico_menu">
@@ -142,6 +159,10 @@ http://educationaboveall.org
                             };
                             gerarSunburst();
                         </script>
+                    </div>
+                    <div class="menu_pag btt_prox">
+                        <div class="triangulo"></div>
+                        <a href="#territorio">Território</a>
                     </div>
                     <a class="next c1" href="javascript:$.fn.fullpage.moveSlideRight();"><i class="fa fa-step-forward" aria-hidden="true"></i></a>
                 </div>
@@ -181,12 +202,39 @@ http://educationaboveall.org
 
             <?
             /**
-             * Página sobre os Indicadores
+             * Página sobre com o Território
              */
             ?>
-            <div class="section indicadores">
-                <h2>Indicadores</h2>
+            <div class="section territorio">
+                <div id="mapa"></div>
+                <div class="menu_pag btt_ant">
+                    <div class="triangulo"></div>
+                    <a href="#objetivos">Objetivos</a>
+                </div>
+                <h2>Território</h2>
+                <div class="menu_pag btt_prox">
+                    <div class="triangulo"></div>
+                    <a href="#projetos">Projetos</a>
+                </div>
             </div>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBO8Cn0J79Pfmv61d780xpT8178Cnedw7Y"></script>
+            <script>
+                var options = {
+                    center:{lat:-15.7941, lng:-47.8825},
+                    zoom:4,
+                    mapTypeControl: true,
+                    mapTypeControlOptions:{
+                        position: google.maps.ControlPosition.RIGHT_BOTTOM
+                    },
+                    zoomControl: true,
+                    zoomControlOptions:{
+                        position: google.maps.ControlPosition.RIGHT_CENTER
+                    },
+                    scaleControl: true,
+                    streetViewControl: false
+                };
+                var map = new google.maps.Map(document.getElementById('mapa'), options);
+            </script>
 
             <?
             /**
@@ -198,7 +246,15 @@ http://educationaboveall.org
                     <source src="img/formiga.webm" type="video/webm"/>
                     <source src="img/formiga.mp4" type="video/mp4"/>
                 </video>
+                <div class="menu_pag btt_ant">
+                    <div class="triangulo"></div>
+                    <a href="#territorio">Território</a>
+                </div>
                 <h2>Projetos</h2>
+                <div class="menu_pag btt_prox">
+                    <div class="triangulo"></div>
+                    <a href="#agenda">Agenda</a>
+                </div>
             </div>
 
             <?
@@ -207,6 +263,10 @@ http://educationaboveall.org
              */
             ?>
             <div class="section agenda">
+                <div class="menu_pag btt_ant">
+                    <div class="triangulo"></div>
+                    <a href="#projetos">Projetos</a>
+                </div>
                 <h2>Agenda</h2>
                 <footer>
                     <div id="footer-button"></div>
@@ -223,12 +283,8 @@ http://educationaboveall.org
     </body>
     <script>
         $(document).ready(function() {
-            //navigationTooltips: ['Abertura', 'Objetivos', 'Indicadores', 'Projetos', 'Agenda'],
-            //navigation: true,
-            //navigationPosition: 'left',
-
             $('#fullpage').fullpage({
-                anchors: ['abertura', 'objetivos', 'indicadores', 'projetos', 'agenda'],
+                anchors: ['abertura', 'objetivos', 'territorio', 'projetos', 'agenda'],
                 controlArrows: false,
                 loopHorizontal: false,
                 afterRender: function(){

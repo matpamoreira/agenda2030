@@ -31,10 +31,9 @@ function fecharMeta(ods){
 }
 
 function detIndicador(id_ind){
-    $('#' + id_ind).css('display', 'table-row');
-    var caixaValorInd = $('#' + id_ind + ' td.dados');
+    $('#i' + id_ind).css('display', 'table-row');
+    var caixaValorInd = $('#i' + id_ind + ' td.dados');
     caixaValorInd.addClass('carregando');
-    caixaValorInd.empty();
     $.ajax({
         url: 'funcoes/carrega_dados_indicador.php',
         data: { 'id_ind':id_ind },
@@ -44,13 +43,57 @@ function detIndicador(id_ind){
     }).done(function(retorno){
         caixaValorInd.removeClass('carregando');
         caixaValorInd.append('<a class="fechar" title="Fechar" href="javascript:fecharVlrInd(' + id_ind + ');">X</a>');
-        caixaValorInd.append(retorno.resultado);
-        //getGrafico(id_ind, retorno.data);
+        $(caixaValorInd).find('.tabela').html(retorno.tabela);
+        showGrafico(id_ind, retorno.dados);
+    });
+}
+
+function showGrafico(idCaixa, dados){
+    var localeFormatter = d3.locale({
+        "decimal": ",",
+        "thousands": ".",
+        "grouping": [3],
+        "currency": ["R$", ""],
+        "dateTime": "%d/%m/%Y %H:%M:%S",
+        "date": "%d/%m/%Y",
+        "time": "%H:%M:%S",
+        "periods": ["AM", "PM"],
+        "days": ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+        "shortDays": ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+        "months": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+        "shortMonths": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
+    });
+
+    var arrayLinhas = [];
+    arrayLinhas.push(['x'].concat(dados.rotulos.split(",")));
+    var rotulos = {};
+    for( var cont = 0; cont < dados.indicadores.length; cont++ ){
+        arrayLinhas.push([cont].concat(dados.indicadores[cont].valores.split(",")));
+        eval("var rot = {" + cont + ":'" + dados.indicadores[cont].nome + "'};");
+        $.extend(rotulos, rot);
+    }
+    c3.generate({
+        bindto:'#i' + idCaixa + ' .grafico',
+        data:{
+            x:'x',
+            columns: arrayLinhas,
+            names: rotulos
+        },
+        legend:{
+            position: 'right'
+        },
+        tooltip:{
+            format:{
+                value:function(value){
+                    return localeFormatter.numberFormat('')(value);
+                }
+            }
+        }
     });
 }
 
 function fecharVlrInd(id){
-    var caixa = $('#' + id);
+    var caixa = $('#i' + id);
     caixa.css('display', 'none');
 }
 
@@ -64,4 +107,21 @@ function toogleMenu(){
         $('#menu_objetivos').hide();
     }
     */
+}
+
+function openNav(){
+    var menu = $('#mySidenav');
+    if( menu.css('width') == '250px' ){
+        menu.css('width', '0');
+        $('#menu-burger-wrapper').removeClass('menu-opened');
+    }
+    else{
+        menu.css('width', '250px');
+        $('#menu-burger-wrapper').addClass('menu-opened');
+    }
+}
+
+function closeNav(){
+    $('#mySidenav').css('width', 0);
+    $('#menu-burger-wrapper').removeClass('menu-opened');
 }
