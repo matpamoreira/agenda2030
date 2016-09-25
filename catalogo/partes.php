@@ -46,7 +46,6 @@ $PALAVRAS_CHV = 'Catálogo, Dados';
 <?php
 }
 
-
 function getInicio(){
     getHead();
 }

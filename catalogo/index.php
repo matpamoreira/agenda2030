@@ -4,7 +4,7 @@ include_once 'play.php';
 include_once 'conectar.php';
 getInicio();
 ?>
-<form id="tabelas" action="javascript:consultar('tabelas', 'consulta_catalogo.php');">
+<form id="tabelas" action="javascript:consultar('tabelas', 'funcoes/consultar.php', 'colunas');">
     <div class="cmp">
         <span>Tabelas:</span>
         <div class="tabelas">
@@ -20,7 +20,7 @@ getInicio();
     $cont = 1;
     while( $row = $result->fetch_assoc() ){
         echo '<div>';
-        echo "<input id=\"t$cont\" name=\"ts[]\" type=\"checkbox\"/>";
+        echo "<input id=\"t$cont\" name=\"ts[]\" value=\"{$row['TABLE_NAME']}\" type=\"checkbox\"/>";
         echo "<label for=\"t$cont\">{$row['TABLE_NAME']}</label>";
         echo '</div>';
         $cont++;
@@ -31,7 +31,10 @@ getInicio();
     <div class="clear"></div>
     <input type="submit" value="Consultar">
 </form>
-
+<form id="colunas" action="javascript:consultar('colunas', 'funcoes/consultar.php', 'resultado');">
+</form>
+<div id="resultado">
+</div>
 <?php
 getfim();
 ?>
