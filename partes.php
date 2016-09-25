@@ -7,18 +7,10 @@ function getInicio(){
     global $NOM_PAGINA;
 
     $DESC_SISTEMA = 'Plataforma online da Agenda 2030 para o Desenvolvimento Sustentável';
-    $PALAVRAS_CHV = 'PALABRAS CHAVE';
+    $PALAVRAS_CHV = 'ODS, Objetivos, Desenvolvimento, Sustetável';
 
     include_once 'conectar.php';
-    //Registrar que o usuário acessou a página
-/*
-    if( isset($_SESSION['seq_dim_usuario']) ){
-        $sql = "insert into bi_dadospublicos_oltp.dim_acesso_pagina (seq_dim_usuario, seq_dim_entidade, dsc_pagina)
-					values ({$_SESSION['seq_dim_usuario']}, '{$_SESSION["municipio"]['seq_dim_entidade']}', '$NOM_PAGINA');";
-        $conn->query($sql);
-    }
-*/
-    ?>
+?>
     <!DOCTYPE html>
     <html lang="pt-BR">
     <head>

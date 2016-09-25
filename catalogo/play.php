@@ -1,6 +1,7 @@
 <?php
 date_default_timezone_set('America/Sao_Paulo');
 session_start();
+include_once 'partes.php';
 
 if( (!isset($VER_LOGIN) || $VER_LOGIN) && !isset($_SESSION['catalogo']['id_usuario']) ) {
     header("location:logar.php");
