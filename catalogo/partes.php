@@ -1,5 +1,6 @@
 <?php
 $NOM_SISTEMA = 'Catálogo de Dados';
+$NOM_PROJETO = 'Agenda 2030';
 $NOM_PAGINA  = null;
 function getHead(){
 global $NOM_SISTEMA;
@@ -24,11 +25,13 @@ $PALAVRAS_CHV = 'Catálogo, Dados';
     <link rel="icon" type="image/png" sizes="16x16" href="img/logo_pq.png" />
     <link rel="apple-touch-icon" type="image/x-icon" href="img/logo_pq.png" />
 
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+
     <title><? echo $NOM_SISTEMA . ( isset($NOM_PAGINA) ? ' - ' . $NOM_PAGINA : '' ); ?></title>
     <meta name="description" content="<? echo $DESC_SISTEMA; ?>">
     <meta name="keywords" content="<? echo $PALAVRAS_CHV; ?>" />
 
-    <meta property="fb:app_id" content="796464717165526" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="<? echo $NOM_SISTEMA; ?>" />
@@ -38,20 +41,29 @@ $PALAVRAS_CHV = 'Catálogo, Dados';
     <link rel="stylesheet" type="text/css" media="screen" href="css/genesis.css"/>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/brain.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju-1.11.4/dt-1.10.12/r-2.1.0/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/ju-1.11.4/dt-1.10.12/r-2.1.0/datatables.min.js"></script>
 </head>
-<body>
-    <header>
-        Catálogo de Dados
-    </header>
 <?php
 }
 
 function getInicio(){
+    global $NOM_SISTEMA;
+    global $NOM_PROJETO;
     getHead();
+?>
+<body>
+    <header>
+        <?php echo $NOM_SISTEMA . ' - ' . $NOM_PROJETO; ?>
+    </header>
+    <div class="conteudo">
+<?php
 }
 
 function getFim(){
 ?>
+    </div>
 </body>
 </html>
 <?php

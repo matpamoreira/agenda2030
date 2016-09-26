@@ -31,9 +31,25 @@ getInicio();
     <div class="clear"></div>
     <input type="submit" value="Consultar">
 </form>
-<form id="colunas" action="javascript:consultar('colunas', 'funcoes/consultar.php', 'resultado');">
+<form id="colunas" action="javascript:consultar('colunas', 'funcoes/consultar_colunas.php', 'dados');" style="display:none;">
+    <div class="cmp">
+        <span>Colunas:</span>
+        <div class="resultado"></div>
+    </div>
+    <div class="cmp">
+        <label>Quant. Página</label>
+        <select name="q_p">
+            <option>10</option>
+            <option>50</option>
+            <option>100</option>
+        </select>
+    </div>
+    <input type="hidden" name="ts" value="">
+    <div class="clear"></div>
+    <input type="submit" value="Consultar">
 </form>
-<div id="resultado">
+<div id="dados">
+    <div class="resultado"></div>
 </div>
 <?php
 getfim();
