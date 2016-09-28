@@ -1,4 +1,5 @@
-@import 'https://fonts.googleapis.com/css?family=Oswald';
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');
 html, body, h1, h2, h3, h4, h5, h6, ul, li, button, a, p, span, table, thead, tbody, tfoot, tr, th, td{
   margin:0;
   padding:0;
@@ -26,12 +27,12 @@ html, body, h1, h2, h3, h4, h5, h6, ul, li, button, a, p, span, table, thead, tb
     margin-bottom:20px;
 }
 .f_p{ /*fonte pequena*/
-    font-size:12px !important;
+    font-size:10px !important;
 }
 body{
     font-family:'Oswald', sans-serif;
     background-color:#2B2B2B;
-    color:#BABABA;
+    color:#EAEAEA;
 }
 header{
     font-family:inherit;
@@ -42,22 +43,149 @@ header{
     padding:5px 10px;
     line-height:1;
 }
+header i{
+    transform:translateY(-1px);
+    margin-right:5px;
+}
+header .usu{
+    float:right;
+}
+a{
+    color:inherit;
+    cursor:pointer;
+}
 .conteudo{
     padding:10px;
+}
+.titulo{
+    margin-bottom:5px;
+    display:inline-block;
 }
 label{
     cursor:pointer;
 }
+/*http://stackoverflow.com/questions/34388696/how-to-change-the-background-color-on-a-input-checkbox-with-css*/
+input[type="checkbox"]{
+    cursor:pointer;
+}
+input[type="checkbox"]:disabled{
+    background-color:#888;
+    cursor:default;
+}
+input[type="checkbox"]:disabled + label{
+    color:#888;
+    text-decoration:line-through;
+    cursor:default;
+}
 #tabelas{
     margin-bottom:10px;
+}
+.tabelas:empty{
+    content: 'Não foram localizadas tabelas';
 }
 .tabelas div{
     float:left;
     margin-right:10px;
 }
+.tabela{
+    padding:5px;
+    background-color:#3F3F3F;
+    border:1px solid #424242;
+    margin-bottom:5px;
+    position:relative;
+}
+.tabela .comentario{
+    top:22px;
+    left:30px;
+}
+.comentario{
+    display:none;
+    font-size:12px;
+    position:absolute;
+    padding:5px 5px 2px;
+    border:1px solid black;
+    background-color:#DDDDDD;
+    color:black;
+    z-index:2;
+    white-space:nowrap;
+    line-height:1.5;
+}
+.tabela:hover .comentario{
+    display:block;
+}
+#busca_tabela{
+    float:right;
+    width:250px;
+    position:relative;
+    transform:translateY(-3px);
+    text-align:right;
+    z-index:3;
+}
+#busca_tabela:before{
+    font-family:FontAwesome, sans-serif;
+    content:"\f002";
+    color:#3F3F3F;
+    position:absolute;
+    right:2px;
+    top:2px;
+    font-size:16px;
+}
+#busca_tabela input{
+    padding:1px 22px 1px 2px;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    width:80%;
+    text-align:right;
+}
+#busca_tabela input:focus{
+    width:100%;
+    padding:3px 22px 3px 2px;
+}
 #colunas{
     float:left;
-    padding-right:10px;
+    padding-right:20px;
+}
+.colunas{
+    overflow-x:visible;
+    margin-bottom:5px;
+}
+.colunas .resultado{
+    max-height:400px;
+    padding-right:20px;
+    overflow-y:auto;
+}
+.resultado .colsTab{
+    margin-top:5px;
+}
+.resultado .colsTab:first-child{
+    margin-top:0;
+}
+.coluna{
+    white-space:nowrap;
+    margin-bottom:2px;
+    position:relative;
+}
+.coluna .comentario{
+    left:55px;
+    top:15px;
+}
+.coluna:hover .comentario{
+    display:block;
+}
+.paginas{
+    padding:5px 0;
+    font-size:12px;
+    margin-bottom:5px;
+}
+.paginas .opcoes{
+    margin-left:5px;
+}
+.paginas .opcoes *{
+    margin-right:5px;
+}
+.paginas .opcoes *:last-child{
+    margin-right:0;
 }
 table th{
     color:#EEE;

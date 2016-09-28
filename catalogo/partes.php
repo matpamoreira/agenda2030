@@ -55,7 +55,8 @@ function getInicio(){
 ?>
 <body>
     <header>
-        <?php echo $NOM_SISTEMA . ' - ' . $NOM_PROJETO; ?>
+        <i class="fa fa-database" aria-hidden="true"></i><span><?php echo $NOM_SISTEMA . ' - ' . $NOM_PROJETO; ?></span>
+        <div class="usu"><?php echo $_SESSION['catalogo']['nom_usuario']; ?></div>
     </header>
     <div class="conteudo">
 <?php
