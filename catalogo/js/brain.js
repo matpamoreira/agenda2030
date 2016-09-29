@@ -21,14 +21,6 @@ function filtraTabelas(campo){
     }
 }
 
-function verTabela(){
-    if( $('.tabelas input:checked').length < 1 ){
-        alert('Antes selecione pelo menos 1 tabela.');
-        return false;
-    }
-    return true;
-}
-
 function verColuna(){
     if( $('#colunas .resultado input:checked').length < 1 ){
         alert('Antes selecione pelo menos 1 coluna.');
@@ -37,28 +29,57 @@ function verColuna(){
     return true;
 }
 
-function marcaTabela(obj){
+var ativas = new Array();
+function marcaTabela(obj, eAsync){
+    if(eAsync == undefined){
+        eAsync = true;
+    }
     obj = $(obj);
+    var nAtivas = obj.attr('ativas').split(",");
     if( obj.is(":checked") ){
-        var ativas = obj.attr('ativas');
-        $('.tabelas input').each(function (){
-            if( ativas.indexOf(',' + $(this).attr('id').substr(1) + ',') == -1 ){
-                $(this).attr('disabled', 'disabled');
-            }
-        });
-        consultarT(obj.val(), obj.attr('id'));
+        ativas = ativas.concat(nAtivas);
+        consultarT(obj.val(), obj.attr('id'), eAsync);
     }
     else{
+        var quantCheck = $('.tabelas input:checked').length;
+        $.each(nAtivas, function(key, value){
+            ativas.splice(ativas.indexOf(value), 1);
+            var inputTab = $('#t' + value);
+            if( quantCheck > 1 && inputTab.is(":checked") ){
+                var quant = 0;
+                for(var i = 0; i < ativas.length; i++){
+                    if( ativas[i] == value ){
+                        quant++;
+                    }
+                    if( quant > 2 ){
+                        continue;
+                    }
+                }
+                if( quant <= 1 ){
+                    inputTab.attr('checked', false);
+                    quantCheck--;
+                    marcaTabela(inputTab);
+                }
+            }
+        });
         $('#colunas .resultado #cs' + obj.attr('id')).remove();
         if( $('.tabelas input:checked').length == 0 ){
-            $('.tabelas input').removeAttr('disabled');
             $('#colunas').css('display', 'none');
         }
         $('#dados .resultado').empty();
     }
+
+    $('.tabelas input').each(function (){
+        if( ativas.length > 0 && ativas.indexOf($(this).attr('id').substr(1)) == -1 ){
+            $(this).attr('disabled', 'disabled');
+        }
+        else{
+            $(this).removeAttr('disabled');
+        }
+    });
 }
 
-function consultarT(tabela, nome){
+function consultarT(tabela, nome, eAsync){
     var cx_retorno = $('#colunas .resultado');
     $('#dados .resultado').empty();
     $('#chAll').prop('checked', false);
@@ -69,7 +90,7 @@ function consultarT(tabela, nome){
         data: {'t': tabela, 'n': nome},
         cache: true,
         dataType: 'json',
-        async: false,
+        async: eAsync,
         type: 'POST'
     }).done(function(retorno){
         if(retorno.status == 'ok'){
@@ -106,9 +127,13 @@ function consultarC(p){
 function checkAll(){
     var marcarTodos = $('#chAll');
     if( marcarTodos.is(":checked") ){
-        $('#colunas .resultado input[type=checkbox]').prop('checked', true);
+        $('#colunas .resultado input[type=checkbox]').attr('checked', true);
     }
     else{
-        $('#colunas .resultado input[type=checkbox]').prop('checked', false);
+        $('#colunas .resultado input[type=checkbox]').attr('checked', false);
     }
+}
+
+function geraLink(link){
+    alert(location.href.substring(0, location.href.lastIndexOf('/') + 1 ) + link);
 }

@@ -3,8 +3,12 @@ $VER_LOGIN = true;
 include_once 'play.php';
 include_once 'conectar.php';
 getInicio();
+
+$ts = $_REQUEST['ts'];
+$cs = $_REQUEST['cs'];
+$qp = $_REQUEST['qp'];
 ?>
-<form id="tabelas" action="javascript:consultarT();" onsubmit="return verTabela();">
+<form id="tabelas">
     <div class="cmp">
         <div>
             <div class="titulo">Tabelas:</div>
@@ -48,13 +52,13 @@ getInicio();
         }
         echo '<div class="tabela">';
         $ativas = '';
-        if( isset($row['tbs_ref']) ){
+        if( isset($row['tbs_ref']) ){ //trocar nome pelo numeros
             $referencias = explode(',', $row['tbs_ref']);
             foreach($referencias as $referencia) {
-                $ativas .= $tabelas[$referencia] . ',';
+                $ativas .= ',' . $tabelas[$referencia];
             }
         }
-        echo "<input id=\"t{$row['r']}\" name=\"ts[]\" value=\"{$row['TABLE_NAME']}\" type=\"checkbox\" onchange=\"marcaTabela(this);\" ativas=\",{$row['r']},$ativas\"/>";
+        echo "<input id=\"t{$row['r']}\" name=\"ts[]\" value=\"{$row['TABLE_NAME']}\" type=\"checkbox\" onchange=\"marcaTabela(this);\" ativas=\"{$row['r']}$ativas\"/>";
         echo "<label for=\"t{$row['r']}\">{$row['TABLE_NAME']}</label>";
         echo '<div class="comentario">';
         echo number_format($row['TABLE_ROWS'], 0, ',', '.') . ' linhas <span class="f_p">(' . number_format($row['DATA_LENGTH'] / 1024 / 1024, 2, ',', '.') . ' MB)</span><br/>';
@@ -76,20 +80,41 @@ getInicio();
     <div class="cmp">
         <label>Quant. por Página</label>
         <select name="q_p">
-            <option>10</option>
-            <option>20</option>
-            <option>50</option>
-            <option>100</option>
-            <option>200</option>
+            <option<?php if($qp == 10) echo ' selected="selected"'; ?>>10</option>
+            <option<?php if($qp == 20) echo ' selected="selected"'; ?>>20</option>
+            <option<?php if($qp == 50) echo ' selected="selected"'; ?>>50</option>
+            <option<?php if($qp == 100) echo ' selected="selected"'; ?>>100</option>
+            <option<?php if($qp == 200) echo ' selected="selected"'; ?>>200</option>
         </select>
     </div>
     <input id="p" type="hidden" name="p">
     <div class="clear"></div>
-    <input type="submit" value="Consultar">
+    <input id="consultar" type="submit" value="Consultar">
 </form>
 <div id="dados">
     <div class="resultado"></div>
 </div>
 <?php
+if( isset($ts) ){
+?>
+<script>
+    var ts = '<?php echo $ts; ?>'.split(',');
+    $.each(ts, function (key, value){
+        var obj = $("#tabelas .tabela label:contains('" + value + "')").prev();
+        if( obj !== undefined ){
+            obj.attr('checked', true);
+            marcaTabela(obj, false);
+        }
+    });
+    var cs = '<?php echo $cs; ?>'.split(',');
+    $.each(cs, function(key, value){
+        $("#colunas .coluna label:contains('" + value + "')").prev().attr('checked', true);
+    });
+    if( cs !== undefined ){
+        $('#consultar').click();
+    }
+</script>
+<?php
+}
 getfim();
 ?>

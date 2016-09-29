@@ -50,6 +50,23 @@ header i{
 header .usu{
     float:right;
 }
+header .sair{
+    text-transform:lowercase;
+    font-size:10px;
+    vertical-align:middle;
+    background-color:#f1f1f1;
+    color:#1B1B1B;
+    display:inline-block;
+    margin-left:5px;
+    padding:3px 6px;
+    transform:translateY(-2px);
+}
+header .sair:before{
+    content:'\f08b';
+    font-family:FontAwesome, sans-serif;
+    color:#1B1B1B;
+    margin-right:2px;
+}
 a{
     color:inherit;
     cursor:pointer;
@@ -81,7 +98,7 @@ input[type="checkbox"]:disabled + label{
     margin-bottom:10px;
 }
 .tabelas:empty{
-    content: 'Não foram localizadas tabelas';
+    content:'Não foram localizadas tabelas';
 }
 .tabelas div{
     float:left;
@@ -97,6 +114,9 @@ input[type="checkbox"]:disabled + label{
 .tabela .comentario{
     top:22px;
     left:30px;
+}
+.tabela input{
+    margin-left:0;
 }
 .comentario{
     display:none;
@@ -172,6 +192,27 @@ input[type="checkbox"]:disabled + label{
 }
 .coluna:hover .comentario{
     display:block;
+}
+.cabecalho .botoes{
+    float:right;
+    display:table;
+}
+.cabecalho .botoes .botao{
+    color:#EEE;
+    font-size:18px;
+    background-color:#3F3F3F;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+    border:1px solid #424242;
+    padding:5px;
+    width:32px;
+    height:32px;
+    box-sizing:border-box;
+    margin-left:5px;
+    text-align:center;
+    vertical-align:middle;
+    display:inline-block;
 }
 .paginas{
     padding:5px 0;

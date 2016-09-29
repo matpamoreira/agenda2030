@@ -8,7 +8,7 @@ select distinct
 Age_Group
 from stg_indicadores_globais sig;
 
-insert into dim_indicador (seq_dim_meta, nom_indicador, dsc_frequencia, dsc_undiade)
+insert into dim_indicador (seq_dim_meta, nom_indicador, dsc_frequencia, dsc_unidade)
 select (select seq_dim_meta
 from dim_meta dm
 where dm.num_meta = sig.Target) as seq_dim_meta,

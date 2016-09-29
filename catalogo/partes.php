@@ -56,7 +56,12 @@ function getInicio(){
 <body>
     <header>
         <i class="fa fa-database" aria-hidden="true"></i><span><?php echo $NOM_SISTEMA . ' - ' . $NOM_PROJETO; ?></span>
-        <div class="usu"><?php echo $_SESSION['catalogo']['nom_usuario']; ?></div>
+        <?php if( isset($_SESSION['catalogo']['nom_usuario']) ){ ?>
+        <div class="usu">
+            <span><?php echo $_SESSION['catalogo']['nom_usuario']; ?></span>
+            <a class="sair" href="logar.php?acao=sair" title="Deslogar do sistema">Sair</a>
+        </div>
+        <?php } ?>
     </header>
     <div class="conteudo">
 <?php

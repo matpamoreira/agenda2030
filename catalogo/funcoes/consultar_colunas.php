@@ -4,11 +4,11 @@ include_once '../play.php';
 include_once '../conectar.php';
 $array = array();
 $array['status']  = 'ok';
-function replace($val){
-    return str_replace('.', '.`', $val) . '`';
-}
 function arrumaNome($val){
     return substr($val, strpos($val, '.') + 1);
+}
+function arrumaNomeTab($val){
+    return substr($val, 0, strpos($val, ' '));
 }
 
 $tabelas = $_REQUEST['cts'];
@@ -37,11 +37,10 @@ if( sizeof($tabelas) > 1 ){
 else{
     $where = '';
 }
+$tabelas_link = implode(',', array_map('arrumaNomeTab', $tabelas));
 $tabelas = implode(',', $tabelas);
-
-$colunas = array_map('replace', $_REQUEST['cs']);
-$colunas = implode(",", $colunas);
-$quant  = $_REQUEST['q_p'];
+$colunas = $_REQUEST['cs'];
+$quant   = $_REQUEST['q_p'];
 if( !isset($quant) ){
     $quant = 50;
 }
@@ -57,7 +56,16 @@ $sql = "select count(1) as t
 $result = $conn->query($sql);
 $row    = $result->fetch_assoc();
 $total  = $row['t'];
-$array['dados']  = '<div>' . number_format($total, 0, ',', '.') . ' registros</div>';
+$array['dados']  = '<div class="cabecalho">';
+$array['dados'] .= '<div class="botoes">';
+$array['dados'] .= "<a class=\"botao\" onclick=\"filtrar();\" title=\"Filtrar o resultado\">";
+$array['dados'] .= '<i class="fa fa-filter" aria-hidden="true"></i>';
+$array['dados'] .= '</a>';
+$array['dados'] .= "<a class=\"botao\" onclick=\"geraLink('index.php?ts=$tabelas_link&cs=" . implode(',', array_map('arrumaNome', $_REQUEST['cs'])). "&qp=$quant');\" title=\"Gerar um link para esta visulização\">";
+$array['dados'] .= '<i class="fa fa-link" aria-hidden="true"></i>';
+$array['dados'] .= '</a>';
+$array['dados'] .= '</div>';
+$array['dados'] .= '<div>' . number_format($total, 0, ',', '.') . ' registros</div>';
 $qtd_pag = ceil($total / $quant);
 if( $qtd_pag > 1 ){
     $array['dados'] .= '<div class="paginas">Páginas:<span class="opcoes">';
@@ -75,11 +83,12 @@ if( $qtd_pag > 1 ){
     $array['dados'] .= "<a onclick=\"consultarC($qtd_pag);\" title=\"Mudar para última página (" . number_format($qtd_pag, 0, ',', '.') . ")\">$rot</a>";
     $array['dados'] .= '</span></div>';
 }
-$sql = "select $colunas
-          from $tabelas $where
+$array['dados'] .= '</div>';
+array_walk($colunas, function(&$val, $key){ $val = str_replace('.', '.`', $val) . '` as ' . chr($key + 65); });
+$sql = 'select ' . implode(",", $colunas) .
+        " from $tabelas $where
          limit $offset, $quant;";
 $result = $conn->query($sql);
-
 $array['dados'] .= '<table>';
 $array['dados'] .= '<thead>';
 $array['dados'] .= '<tr>';

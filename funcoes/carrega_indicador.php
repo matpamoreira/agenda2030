@@ -7,7 +7,7 @@ $id_meta = $_REQUEST['meta'];
 $sql = "select di.seq_dim_indicador,
                di.nom_indicador,
                di.dsc_frequencia,
-               di.dsc_undiade
+               di.dsc_unidade
           from dim_indicador di
          where di.seq_dim_meta = $id_meta
          order by di.seq_dim_indicador";
@@ -24,7 +24,7 @@ if( $result->num_rows > 0 ) {
         $tabela .= "<td>$cont</td>";
         $tabela .= "<td class=\"rot\"><a title=\"Detalha indicador\" href=\"javascript:detIndicador({$row['seq_dim_indicador']});\">{$row['nom_indicador']}</a></td>";
         $tabela .= "<td>{$row['dsc_frequencia']}</td>";
-        $tabela .= "<td>{$row['dsc_undiade']}</td>";
+        $tabela .= "<td>{$row['dsc_unidade']}</td>";
         $tabela .= '</tr>';
         $tabela .= "<tr id=\"i{$row['seq_dim_indicador']}\" class=\"detInd\">";
         $tabela .= '<td colspan="4" class="dados">';
