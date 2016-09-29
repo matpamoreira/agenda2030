@@ -7,9 +7,10 @@ getInicio();
 $ts = $_REQUEST['ts'];
 $cs = $_REQUEST['cs'];
 $qp = $_REQUEST['qp'];
+$p  = $_REQUEST['p'];
 ?>
 <form id="tabelas">
-    <div class="cmp">
+    <div>
         <div>
             <div class="titulo">Tabelas:</div>
             <div id="busca_tabela"><input type="text" name="nome" placeholder="Nome ou descrição da tabela" onkeyup="filtraTabelas(this);"/></div>
@@ -77,7 +78,7 @@ $qp = $_REQUEST['qp'];
     <div class="colunas">
         <div class="resultado"></div>
     </div>
-    <div class="cmp">
+    <div>
         <label>Quant. por Página</label>
         <select name="q_p">
             <option<?php if($qp == 10) echo ' selected="selected"'; ?>>10</option>
@@ -111,7 +112,7 @@ if( isset($ts) ){
         $("#colunas .coluna label:contains('" + value + "')").prev().attr('checked', true);
     });
     if( cs !== undefined ){
-        $('#consultar').click();
+        consultarC(<?php echo $p; ?>);
     }
 </script>
 <?php

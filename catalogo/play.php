@@ -12,8 +12,15 @@ foreach($_REQUEST as $indice => $value){
         $_REQUEST[$indice] = htmlspecialchars(addslashes($value));
     }
     else {
-        foreach ( $value as $innerKey => $innerValue ) {
-            $_REQUEST[$indice][$innerKey] = htmlspecialchars(addslashes($innerValue));
+        foreach ($value as $innerKey => $innerValue) {
+            if( !is_array($innerValue) ) {
+                $_REQUEST[$indice][$innerKey] = htmlspecialchars(addslashes($innerValue));
+            }
+            else {
+                foreach ($innerValue as $innerInnerKey => $innerInnerValue) {
+                    $_REQUEST[$indice][$innerKey][$innerInnerKey] = htmlspecialchars(addslashes($innerInnerValue));
+                }
+            }
         }
     }
 }

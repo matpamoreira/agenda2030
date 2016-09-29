@@ -4,6 +4,9 @@ include_once '../play.php';
 include_once '../conectar.php';
 $array = array();
 $array['status']  = 'ok';
+$_SESSION['colunas'] = array();
+$_SESSION['filtros'] = array();
+
 function arrumaNome($val){
     return substr($val, strpos($val, '.') + 1);
 }
@@ -37,6 +40,20 @@ if( sizeof($tabelas) > 1 ){
 else{
     $where = '';
 }
+
+$filtros = $_REQUEST['f'];
+$where_filtro = '';
+if( sizeof($filtros) > 0 ) {
+    foreach($filtros as $filtro){
+        if( strlen($filtro['v']) > 0 ){
+            $where_filtro .= " and {$filtro['n']} {$filtro['s']} '{$filtro['v']}'";
+            $_SESSION['filtros'][$filtro['n']] = $filtro['v'];
+        }
+    }
+}
+if( strlen($where_filtro) > 0 ){
+    $where .= $where_filtro;
+}
 $tabelas_link = implode(',', array_map('arrumaNomeTab', $tabelas));
 $tabelas = implode(',', $tabelas);
 $colunas = $_REQUEST['cs'];
@@ -45,8 +62,8 @@ if( !isset($quant) ){
     $quant = 50;
 }
 $pagina = $_REQUEST['p'];
-if( !isset($pagina) ){
-    $pagina = 0;
+if( !isset($pagina) or strlen($pagina) <= 0 ){
+    $pagina = 1;
 }
 $offset = ($pagina - 1) * $quant;
 
@@ -61,14 +78,14 @@ $array['dados'] .= '<div class="botoes">';
 $array['dados'] .= "<a class=\"botao\" onclick=\"filtrar();\" title=\"Filtrar o resultado\">";
 $array['dados'] .= '<i class="fa fa-filter" aria-hidden="true"></i>';
 $array['dados'] .= '</a>';
-$array['dados'] .= "<a class=\"botao\" onclick=\"geraLink('index.php?ts=$tabelas_link&cs=" . implode(',', array_map('arrumaNome', $_REQUEST['cs'])). "&qp=$quant');\" title=\"Gerar um link para esta visulização\">";
+$array['dados'] .= "<a class=\"botao\" onclick=\"geraLink('index.php?ts=$tabelas_link&cs=" . implode(',', array_map('arrumaNome', $_REQUEST['cs'])). "&qp=$quant&p=$pagina');\" title=\"Gerar um link para esta visulização\">";
 $array['dados'] .= '<i class="fa fa-link" aria-hidden="true"></i>';
 $array['dados'] .= '</a>';
 $array['dados'] .= '</div>';
 $array['dados'] .= '<div>' . number_format($total, 0, ',', '.') . ' registros</div>';
 $qtd_pag = ceil($total / $quant);
+$array['dados'] .= '<div class="paginas">Páginas:<span class="opcoes">';
 if( $qtd_pag > 1 ){
-    $array['dados'] .= '<div class="paginas">Páginas:<span class="opcoes">';
     $rot = ($pagina == 1) ? '[Primeira]' : 'Primeira';
     $array['dados'] .= "<a onclick=\"consultarC(1);\" title=\"Mudar para primeira página\">$rot</a>";
     if( $pagina > 7 ) $array['dados'] .= '<span>...</span>';
@@ -81,10 +98,16 @@ if( $qtd_pag > 1 ){
     if( $pagina < $qtd_pag - 6 ) $array['dados'] .= '<span>...</span>';
     $rot = ($pagina == $qtd_pag) ? '[Última]' : 'Última';
     $array['dados'] .= "<a onclick=\"consultarC($qtd_pag);\" title=\"Mudar para última página (" . number_format($qtd_pag, 0, ',', '.') . ")\">$rot</a>";
-    $array['dados'] .= '</span></div>';
 }
+else{
+    $array['dados'] .= 'Única';
+}
+$array['dados'] .= '</span></div>';
 $array['dados'] .= '</div>';
-array_walk($colunas, function(&$val, $key){ $val = str_replace('.', '.`', $val) . '` as ' . chr($key + 65); });
+array_walk($colunas, function(&$val, $key){
+    $_SESSION['colunas'][$key] = $val;
+    $val = str_replace('.', '.`', $val) . '` as ' . chr($key + 65);
+});
 $sql = 'select ' . implode(",", $colunas) .
         " from $tabelas $where
          limit $offset, $quant;";

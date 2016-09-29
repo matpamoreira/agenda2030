@@ -108,7 +108,7 @@ function consultarC(p){
     $('#dados').css('display', 'block');
     $.ajax({
         url: 'funcoes/consultar_colunas.php',
-        data: $('#colunas').serialize(),
+        data: $('#colunas,#modal_filtro form').serialize(),
         cache: true,
         dataType: 'json',
         async: false,
@@ -136,4 +136,36 @@ function checkAll(){
 
 function geraLink(link){
     alert(location.href.substring(0, location.href.lastIndexOf('/') + 1 ) + link);
+}
+
+function filtrar(){
+    var dialog = $('#modal_filtro');
+    dialog.dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: true,
+        width: $(window).width() * 0.5,
+        height: $(window).height() * 0.8,
+        closeOnEscape: false,
+        title: 'Filtrar Resultado',
+        show:{
+            effect:'blind',
+            duration:200
+        },
+        buttons:{
+            'Filtrar':{
+                text: 'Filtrar',
+                click: function(event){
+                    $( this ).dialog( 'close' );
+                    consultarC();
+                }
+            },
+            'Cancelar': function(){
+                $( this ).dialog( 'close' );
+            }
+        }
+    });
+    dialog.html('Carregando...');
+    dialog.dialog('open');
+    dialog.load('form/filtrar.php');
 }

@@ -2,12 +2,14 @@
 $NOM_SISTEMA = 'Catálogo de Dados';
 $NOM_PROJETO = 'Agenda 2030';
 $NOM_PAGINA  = null;
+
 function getHead(){
 global $NOM_SISTEMA;
+global $NOM_PROJETO;
 global $NOM_PAGINA;
 
-$DESC_SISTEMA = 'Catálogo de Dados.';
-$PALAVRAS_CHV = 'Catálogo, Dados';
+$DESC_SISTEMA = 'Catálogo de Dados';
+$PALAVRAS_CHV = 'Catálogo, Dados, Monitoramento, Tabelas, Dimensões, Documentação, Comentários';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -29,7 +31,7 @@ $PALAVRAS_CHV = 'Catálogo, Dados';
     <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
 
     <title><? echo $NOM_SISTEMA . ( isset($NOM_PAGINA) ? ' - ' . $NOM_PAGINA : '' ); ?></title>
-    <meta name="description" content="<? echo $DESC_SISTEMA; ?>">
+    <meta name="description" content="<? echo $DESC_SISTEMA . ' do projeto ' . $NOM_PROJETO; ?>">
     <meta name="keywords" content="<? echo $PALAVRAS_CHV; ?>" />
 
     <meta property="og:locale" content="pt_BR" />
@@ -38,12 +40,12 @@ $PALAVRAS_CHV = 'Catálogo, Dados';
     <meta property="og:title" content="<? echo $NOM_SISTEMA; ?>" />
     <meta property="og:description" content="<? echo $DESC_SISTEMA; ?>" />
 
+    <link rel="stylesheet" type="text/css" media="screen" href="js/jquery-ui-1.12.1.custom/jquery-ui.min.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="css/genesis.css"/>
-    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="js/brain.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju-1.11.4/dt-1.10.12/r-2.1.0/datatables.min.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/ju-1.11.4/dt-1.10.12/r-2.1.0/datatables.min.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/brain.js"></script>
 </head>
 <?php
 }
@@ -63,6 +65,7 @@ function getInicio(){
         </div>
         <?php } ?>
     </header>
+    <div id="modal_filtro"></div>
     <div class="conteudo">
 <?php
 }
