@@ -15,26 +15,30 @@ function arrumaNomeTab($val){
 }
 
 $tabelas = $_REQUEST['cts'];
+$tabelas_link = implode(',', array_map('arrumaNomeTab', $tabelas));
 if( sizeof($tabelas) > 1 ){
+    $alias_tabelas = array();
+    foreach( $tabelas as $tabela ){
+        $chave = explode(' ', $tabela);
+        $alias_tabelas[$chave[0]] = $chave[1];
+    }
+    $tabelas_where = str_replace(',', "','", $tabelas_link);
     $where = "where 1=1";
-    for( $i = 1; $i < sizeof($tabelas); $i++ ){
-        $chave1 = explode(' ', $tabelas[$i - 1]);
-        $chave2 = explode(' ', $tabelas[$i]);
-
-        $sql = "select REFERENCED_COLUMN_NAME as col1, COLUMN_NAME as col2
+    foreach( $alias_tabelas as $tabela => $chave ){
+        $sql = "select REFERENCED_COLUMN_NAME as col1, TABLE_NAME as tbRef, COLUMN_NAME as col2
                   from INFORMATION_SCHEMA.KEY_COLUMN_USAGE
                  where REFERENCED_TABLE_SCHEMA = '$NAME_DB'
-                   and REFERENCED_TABLE_NAME = '{$chave1[0]}'
-                   and TABLE_NAME = '{$chave2[0]}'
+                   and REFERENCED_TABLE_NAME = '{$tabela}'
+                   and TABLE_NAME in ('$tabelas_where')
                 union
-                select COLUMN_NAME as col1, REFERENCED_COLUMN_NAME as col2
+                select COLUMN_NAME as col1, REFERENCED_TABLE_NAME as tbRef, REFERENCED_COLUMN_NAME as col2
                   from INFORMATION_SCHEMA.KEY_COLUMN_USAGE
                  where REFERENCED_TABLE_SCHEMA = '$NAME_DB'
-                   and REFERENCED_TABLE_NAME = '{$chave2[0]}'
-                   and TABLE_NAME = '{$chave1[0]}';";
+                   and REFERENCED_TABLE_NAME in ('$tabelas_where')
+                   and TABLE_NAME = '{$tabela}';";
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
-        $where .= " and {$chave1[1]}.{$row['col1']} = {$chave2[1]}.{$row['col2']}";
+        $where .= " and {$chave}.{$row['col1']} = {$alias_tabelas[$row['tbRef']]}.{$row['col2']}";
     }
 }
 else{
@@ -54,7 +58,6 @@ if( sizeof($filtros) > 0 ) {
 if( strlen($where_filtro) > 0 ){
     $where .= $where_filtro;
 }
-$tabelas_link = implode(',', array_map('arrumaNomeTab', $tabelas));
 $tabelas = implode(',', $tabelas);
 $colunas = $_REQUEST['cs'];
 $quant   = $_REQUEST['q_p'];
@@ -71,6 +74,10 @@ $offset = ($pagina - 1) * $quant;
 $sql = "select count(1) as t
           from $tabelas $where;";
 $result = $conn->query($sql);
+if( !$result ){
+    echo $sql;
+}
+//echo $sql;
 $row    = $result->fetch_assoc();
 $total  = $row['t'];
 $array['dados']  = '<div class="cabecalho">';

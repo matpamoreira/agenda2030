@@ -67,6 +67,9 @@ header .sair:before{
     color:#1B1B1B;
     margin-right:2px;
 }
+h2{
+    margin-bottom:10px;
+}
 a{
     color:inherit;
     cursor:pointer;
@@ -83,6 +86,11 @@ label{
 }
 .cmp{
     margin-bottom:5px;
+}
+.cmp label{
+    display:inline-block;
+    min-width:45px;
+    text-align:right;
 }
 input[type="checkbox"]{
     cursor:pointer;
@@ -113,10 +121,6 @@ input[type="checkbox"]:disabled + label{
     margin-bottom:5px;
     position:relative;
 }
-.tabela .comentario{
-    top:22px;
-    left:30px;
-}
 .tabela input{
     margin-left:0;
 }
@@ -131,9 +135,6 @@ input[type="checkbox"]:disabled + label{
     z-index:2;
     white-space:nowrap;
     line-height:1.5;
-}
-.tabela:hover .comentario{
-    display:block;
 }
 #busca_tabela{
     float:right;

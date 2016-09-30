@@ -21,6 +21,31 @@ function filtraTabelas(campo){
     }
 }
 
+var objComment;
+function showComment(obj, e){
+    if( objComment !== undefined ) return;
+    objComment = $(obj).find('.comentario');
+    objComment.css('top', '22px')
+    var position = ( $(obj).position().left + 30 + $(obj).find('.comentario').width() < $( document ).width() ) ? 'left' : 'right';
+    objComment.css(position, '30px')
+    objComment.css('display', 'block')
+}
+
+function moveComment(e){
+/*
+ ow.onmousemove = function (e) {
+ var x = (e.clientX + 20) + 'px',
+ y = (e.clientY + 20) + 'px';
+ for (var i = 0; i < tooltips.length; i++) {
+ tooltips[i].style.top = y;
+ */
+}
+
+function hideComment(){
+    objComment.css('display', 'none');
+    objComment = undefined;
+}
+
 function verColuna(){
     if( $('#colunas .resultado input:checked').length < 1 ){
         alert('Antes selecione pelo menos 1 coluna.');

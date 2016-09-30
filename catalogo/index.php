@@ -12,7 +12,7 @@ $p  = $_REQUEST['p'];
 <form id="tabelas">
     <div>
         <div>
-            <div class="titulo">Tabelas:</div>
+            <div class="titulo">Tabelas Disponíveis:</div>
             <div id="busca_tabela"><input type="text" name="nome" placeholder="Nome ou descrição da tabela" onkeyup="filtraTabelas(this);"/></div>
         </div>
         <div class="tabelas">
@@ -51,7 +51,7 @@ $p  = $_REQUEST['p'];
         if( $row['TABLE_COMMENT'] == '' ){
             $row['TABLE_COMMENT'] = 'Sem descrição';
         }
-        echo '<div class="tabela">';
+        echo '<div class="tabela" onmouseover="showComment(this, event);" onmousemove="moveComment(event);" onmouseout="hideComment();">';
         $ativas = '';
         if( isset($row['tbs_ref']) ){ //trocar nome pelo numeros
             $referencias = explode(',', $row['tbs_ref']);
@@ -63,7 +63,7 @@ $p  = $_REQUEST['p'];
         echo "<label for=\"t{$row['r']}\">{$row['TABLE_NAME']}</label>";
         echo '<div class="comentario">';
         echo number_format($row['TABLE_ROWS'], 0, ',', '.') . ' linhas <span class="f_p">(' . number_format($row['DATA_LENGTH'] / 1024 / 1024, 2, ',', '.') . ' MB)</span><br/>';
-        echo $row['TABLE_COMMENT'];
+        echo str_replace("\r", '<br/>', $row['TABLE_COMMENT']);
         echo '</div>';
         echo '</div>';
     }
