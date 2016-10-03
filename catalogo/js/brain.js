@@ -25,7 +25,10 @@ var objComment;
 function showComment(obj, e){
     if( objComment !== undefined ) return;
     objComment = $(obj).find('.comentario');
-    objComment.css('top', '22px')
+    objComment.css('top', '22px');
+    //console.log($(obj).position().left + 30);
+    //console.log($(obj).find('.comentario').width());
+    //console.log($( document ).width());
     var position = ( $(obj).position().left + 30 + $(obj).find('.comentario').width() < $( document ).width() ) ? 'left' : 'right';
     objComment.css(position, '30px')
     objComment.css('display', 'block')
@@ -125,6 +128,8 @@ function consultarT(tabela, nome, eAsync){
     });
 }
 
+var script_sql;
+
 function consultarC(p){
     $('#p').val(( p !== undefined ) ? p : 1);
     var cx_retorno = $('#dados .resultado');
@@ -144,6 +149,7 @@ function consultarC(p){
             if( retorno.tabelas !== undefined ){
                 $('#dados input[name=ts]').val(retorno.tabelas);
             }
+            script_sql = retorno.sql;
         }
         cx_retorno.removeClass('carregando');
     });
@@ -161,6 +167,30 @@ function checkAll(){
 
 function geraLink(link){
     alert(location.href.substring(0, location.href.lastIndexOf('/') + 1 ) + link);
+}
+
+function geraScript(){
+    var dialog = $('#modal_script');
+    dialog.dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: true,
+        width: $(window).width() * 0.5,
+        height: $(window).height() * 0.8,
+        closeOnEscape: false,
+        title: 'Script Consulta',
+        show:{
+            effect:'blind',
+            duration:200
+        },
+        buttons:{
+            'Fechar': function(){
+                $( this ).dialog( 'close' );
+            }
+        }
+    });
+    dialog.html(script_sql);
+    dialog.dialog('open');
 }
 
 function filtrar(){

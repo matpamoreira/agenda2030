@@ -30,12 +30,14 @@ if( sizeof($tabelas) > 1 ){
                  where REFERENCED_TABLE_SCHEMA = '$NAME_DB'
                    and REFERENCED_TABLE_NAME = '{$tabela}'
                    and TABLE_NAME in ('$tabelas_where')
+                   and REFERENCED_TABLE_NAME <> TABLE_NAME
                 union
                 select COLUMN_NAME as col1, REFERENCED_TABLE_NAME as tbRef, REFERENCED_COLUMN_NAME as col2
                   from INFORMATION_SCHEMA.KEY_COLUMN_USAGE
                  where REFERENCED_TABLE_SCHEMA = '$NAME_DB'
                    and REFERENCED_TABLE_NAME in ('$tabelas_where')
-                   and TABLE_NAME = '{$tabela}';";
+                   and TABLE_NAME = '{$tabela}'
+                   and REFERENCED_TABLE_NAME <> TABLE_NAME;";
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         $where .= " and {$chave}.{$row['col1']} = {$alias_tabelas[$row['tbRef']]}.{$row['col2']}";
@@ -77,7 +79,6 @@ $result = $conn->query($sql);
 if( !$result ){
     echo $sql;
 }
-//echo $sql;
 $row    = $result->fetch_assoc();
 $total  = $row['t'];
 $array['dados']  = '<div class="cabecalho">';
@@ -85,6 +86,19 @@ $array['dados'] .= '<div class="botoes">';
 $array['dados'] .= "<a class=\"botao\" onclick=\"filtrar();\" title=\"Filtrar o resultado\">";
 $array['dados'] .= '<i class="fa fa-filter" aria-hidden="true"></i>';
 $array['dados'] .= '</a>';
+
+$array['dados'] .= "<a class=\"botao\" onclick=\"alert('');\" title=\"Exportar dados\">";
+$array['dados'] .= '<i class="fa fa-table" aria-hidden="true"></i>';
+$array['dados'] .= '</a>';
+
+$array['dados'] .= "<a class=\"botao\" onclick=\"alert('');\" title=\"Imprimir resultado\">";
+$array['dados'] .= '<i class="fa fa-print" aria-hidden="true"></i>';
+$array['dados'] .= '</a>';
+
+$array['dados'] .= "<a class=\"botao\" onclick=\"geraScript();\" title=\"Gerar script da consulta\">";
+$array['dados'] .= '<i class="fa fa-code" aria-hidden="true"></i>';
+$array['dados'] .= '</a>';
+
 $array['dados'] .= "<a class=\"botao\" onclick=\"geraLink('index.php?ts=$tabelas_link&cs=" . implode(',', array_map('arrumaNome', $_REQUEST['cs'])). "&qp=$quant&p=$pagina');\" title=\"Gerar um link para esta visulização\">";
 $array['dados'] .= '<i class="fa fa-link" aria-hidden="true"></i>';
 $array['dados'] .= '</a>';
@@ -116,8 +130,9 @@ array_walk($colunas, function(&$val, $key){
     $val = str_replace('.', '.`', $val) . '` as ' . chr($key + 65);
 });
 $sql = 'select ' . implode(",", $colunas) .
-        " from $tabelas $where
-         limit $offset, $quant;";
+        " from $tabelas $where";
+$array['sql'] = $sql . ';';
+$sql .= " limit $offset, $quant;";
 $result = $conn->query($sql);
 $array['dados'] .= '<table>';
 $array['dados'] .= '<thead>';
@@ -126,6 +141,7 @@ $array['dados'] .= '<th>#</th><th>' . implode('</th><th>', array_map('arrumaNome
 $array['dados'] .= '</tr>';
 $array['dados'] .= '</thead><tbody>';
 $cont = $offset;
+//echo $sql;
 while( $row = $result->fetch_assoc() ){
     $cont++;
     $array['dados'] .= '<tr class="l">';

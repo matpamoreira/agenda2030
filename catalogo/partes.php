@@ -1,6 +1,6 @@
 <?php
 $NOM_SISTEMA = 'Catálogo de Dados';
-$NOM_PROJETO = 'Agenda 2030';
+$NOM_PROJETO = 'Sala de Situação da Saúde';
 $NOM_PAGINA  = null;
 
 function getHead(){
@@ -65,6 +65,7 @@ function getInicio(){
         </div>
         <?php } ?>
     </header>
+    <div id="modal_script"></div>
     <div id="modal_filtro"></div>
     <div class="conteudo">
 <?php
