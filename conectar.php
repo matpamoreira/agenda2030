@@ -1,8 +1,8 @@
 <?php
-$servername   = 'diagnosticopublico-cluster.cluster-czzcnh6qx1i8.us-east-1.rds.amazonaws.com';
-$username     = 'agenda2030';
-$password     = 'pnud4mti';
-$NAME_DB      = 'agenda2030';
+$servername   = '';
+$username     = '';
+$password     = '';
+$NAME_DB      = '';
 $NAME_DB_OLTP = 'NOME_BANCO_OLTP';
 
 $conn = new mysqli($servername, $username, $password, $NAME_DB);
